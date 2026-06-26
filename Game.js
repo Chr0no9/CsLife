@@ -11,14 +11,10 @@ function startGame() {
     const traitName = document.getElementById("traitSelect").value;
 
     createPlayer(name, traitName);
-
+    gameState.currentScreen = "QuarterStart";
     console.log("Game started!");
+    console.log(gameState);
 }
-
-init();
-
-
-
 const gameState = {
     year: 1,
     quarter: "Fall",
@@ -28,4 +24,12 @@ const gameState = {
     currentMiniGame: null,
     endgame: false
 };
+
+
+
+init();
+
+
+
+
 
