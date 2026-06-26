@@ -2,13 +2,13 @@ const player = {
     name: "",
     trait: "",
 
-    health: 100,
-    happiness: 100,
-    money: 500,
+    health: 0,
+    happiness: 0,
+    money: 0,
 
-    intellect: 50,
-    coding: 50,
-    social: 50,
+    intellect: 0,
+    coding: 0,
+    social: 0,
     
     gpa: 3.0,
     relationshipStatus: "single",
@@ -20,22 +20,41 @@ const trait = {
     name: "Studious",
 
     bonuses: {
-        intellect: +15,
-        coding: +10,
-        social: -5
+        health: +30,
+        happiness: +40,
+        money: +250,
+        intellect: +90,
+        coding: +70,
+        social: +5
     }
-    name: "Studious",
+    name: "Well_Rounded",
 
     bonuses: {
-        intellect: +15,
-        coding: +10,
-        social: -5
+        health: +50,
+        happiness: +50,
+        money: +500,
+        intellect: +50,
+        coding: +50,
+        social: +50
     }
-    name: "Studious",
+    name: "Social_Butterfly",
 
     bonuses: {
-        intellect: +15,
+        health: +70,
+        happiness: +95,
+        money: +250,
+        intellect: +40,
         coding: +10,
-        social: -5
+        social: +90
+    }
+    name: "Wealthy",
+
+    bonuses: {
+        health: +80,
+        happiness: +80,
+        money: +10000,
+        intellect: +30,
+        coding: +10,
+        social: +30
     }
 };
