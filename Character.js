@@ -15,3 +15,13 @@ const player = {
     internship: null,
     jobOffer: null
 };
+
+const trait = {
+    name: "Studious",
+
+    bonuses: {
+        intellect: +15,
+        coding: +10,
+        social: -5
+    }
+};
