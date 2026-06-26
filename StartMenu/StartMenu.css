@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #FFDDD2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.menu-container {
+    text-align: center;
+}
+
+h1 {
+    color: #006D77;
+    font-size: 64px;
+    margin-bottom: 40px;
+}
+
+.newGameBtn,
+.continueBtn {
+    background-color: #83C5BE;
+    color: #006D77;
+    width: 220px;
+    padding: 16px;
+    margin: 16px auto;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.newGameBtn:hover,
+.continueBtn:hover {
+    background-color: #E29578;
+    color: white;
+    transform: scale(1.05);
+}
