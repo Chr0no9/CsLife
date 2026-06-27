@@ -23,12 +23,32 @@ const gameState = {
     currentScreen: "MainMenu",
     currentEvent: null,
     currentMiniGame: null,
+    event_done: false,
     endgame: false
 };
 
-const Quarters = ["Fall", "Winter", "Spring", "Summer"];
-const last_year = 4;
 
+
+/*
+###############################QUARTER SYSTEM#####################################3
+*/ 
+
+const completeEventsButton  = document.getElementById("completeEventsBtn");
+const nextQuarterButton = document.getElementById("nextQuarterBtn");
+
+completeEventsButton.addEventListener("click", function() {
+    gameState.event_done = true;
+    console.log("Events Completed!");
+    console.log(gameState);
+});
+
+nextQuarterButton.addEventListener("click", function() {
+    NextQuarter(gameState);
+    console.log("Next quarter Clicked!");
+    console.log(gameState);
+});
+
+const LastYear = 4;
 
 /*
  * Note: This function checks if it is the last quarter of the year (summer).
@@ -62,43 +82,54 @@ function NextYear(gameState) {
     // is it summer? yes --> nextYear() & quarter == fall --> stop
  * 
 */
-function NextQuarter(quarter) {
+function NextQuarter(gameState) {
 
     if (gameState.endgame === true) {
         return;
     }
 
-    //Need to add the condition where the events are done 
-
-    if (gameState.year === 4 && gameState.quarter === "Spring") {
-        gameState.endgame = true;
-        // then I need to call the endgame.js here 
-        return; 
+    if (gameState.event_done === false) {
+        return;
     }
 
     if (LastQuarter(gameState.quarter)) {
         NextYear(gameState);
-        gameState.quarter = "Fall"
+        gameState.quarter = "Fall";
+        gameState.event_done = false;
         return;
     }
 
-    if (quarter === "Fall") {
-        return "Winter";
+    if (gameState.quarter === "Fall") {
+        gameState.quarter = "Winter";
+        gameState.event_done = false;
+        return;
     }
 
-    else if (quarter == "Winter") {
-        return "Spring";
+    else if (gameState.quarter === "Winter") {
+        gameState.quarter = "Spring";
+        gameState.event_done = false;
+        return;
     }
 
-    // check if its year 4 
-    else if (quarter == "Spring") { 
-        return "Summer";
+    
+    else if (gameState.quarter === "Spring") { 
+        if (gameState.year === LastYear) {
+            gameState.endgame = true;
+            gameState.currentScreen = "EndGame";
+            return; 
+        }
+
+        else {
+            gameState.quarter = "Summer";
+            gameState.event_done = false;
+            return;
+        }
     }
 }
 
 init();
 
-
+//######################################################################################
 
 
 
