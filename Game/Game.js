@@ -23,7 +23,6 @@ const gameState = {
     currentScreen: "MainMenu",
     currentEvent: null,
     currentMiniGame: null,
-    event_done: false,
     endgame: false
 };
 
@@ -79,19 +78,16 @@ function NextQuarter(gameState) {
     if (LastQuarter(gameState.quarter)) {
         NextYear(gameState);
         gameState.quarter = "Fall";
-        gameState.event_done = false;
         return;
     }
 
     if (gameState.quarter === "Fall") {
         gameState.quarter = "Winter";
-        gameState.event_done = false;
         return;
     }
 
     else if (gameState.quarter === "Winter") {
         gameState.quarter = "Spring";
-        gameState.event_done = false;
         return;
     }
 
@@ -105,7 +101,6 @@ function NextQuarter(gameState) {
 
         else {
             gameState.quarter = "Summer";
-            gameState.event_done = false;
             return;
         }
     }
