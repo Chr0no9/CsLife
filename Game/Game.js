@@ -32,22 +32,6 @@ const gameState = {
 /*
 ###############################QUARTER SYSTEM#####################################3
 */ 
-
-const completeEventsButton  = document.getElementById("completeEventsBtn");
-const nextQuarterButton = document.getElementById("nextQuarterBtn");
-
-completeEventsButton.addEventListener("click", function() {
-    gameState.event_done = true;
-    console.log("Events Completed!");
-    console.log(gameState);
-});
-
-nextQuarterButton.addEventListener("click", function() {
-    NextQuarter(gameState);
-    console.log("Next quarter Clicked!");
-    console.log(gameState);
-});
-
 const LastYear = 4;
 
 /*
