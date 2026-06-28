@@ -1,6 +1,8 @@
 
+
 const events = [
   {
+    // life related events
     id: "car_breakdown",
     title: "Car Breakdown",
     description: "Your car breaks down before midterms.",
@@ -15,4 +17,72 @@ const events = [
       }
     ]
   },
+  {
+    id: "laptop_die",
+    title: "Laptop Failure",
+    description: "Your Laptop won't turn on again before a projects due date.",
+    choices: [
+      {
+        text: "Buy a new one",
+        effects: {money: -1200, happiness: -5}
+      },
+      {
+        text: "Have no Laptop",
+        effects: {happiness: -5, knowledge: -5}
+      }
+    ]
+  },
+  { // school related events
+    id: "failed_midterm",
+    title: "Failed Midterm",
+    description: "You scored a 41% on your midterm.",
+    choices:[
+      {
+        text: "Study extra hard",
+        effects: {happiness: -10, knowledge: 10, social: -5}
+      },
+      {
+        text: "Accept your fate",
+        effects: {happiness: -10}
+      }
+    ]
+
+  },
+  {
+    id: "pass_final",
+    title: "Final Exam Passed",
+    description: "You passed your finals!",
+    choices: [
+      {
+        text: "Celebrate",
+        effects: {happiness: 20}
+      }
+    ]
+  },
+  { // career events
+    id: "hackathan_win", 
+    title: "Hackathon Winner",
+    description: "Your team won 1st at the Hackathon!",
+    choices: [
+      {
+        text: "Accept",
+        effects: {money: 1000, happiness: 10}
+      }
+    ]
+  },
+  {
+    id: "internship_offer",
+    title: "Internship Offer",
+    description: "A company offers you a summer internship.",
+    choices: [
+      {
+        text: "Accept",
+        effects: {money: 5000, career: 20, happiness: 10}
+      },
+      {
+        text: "Decline",
+        effects: { knowledge: 10, money: -5}
+      }
+    ]
+  }
 ];
