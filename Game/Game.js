@@ -1,4 +1,4 @@
-import { createPlayer } from "./player.js";
+import { createPlayer } from "../Character.js";
 
 function init() {
     const startButton = document.getElementById("startGameBtn");
@@ -10,10 +10,14 @@ function startGame() {
     const name = document.getElementById("playerName").value;
     const traitName = document.getElementById("traitSelect").value;
 
-    createPlayer(name, traitName);
+    const player = createPlayer(name, traitName);
+
     gameState.currentScreen = "QuarterStart";
-    console.log("Game started!");
-    console.log(gameState);
+
+    localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+
+    window.location.href = "../mainGame.html";
 }
 const gameState = {
     year: 1,
