@@ -1,5 +1,4 @@
 import { createPlayer } from "../Character.js";
-import { NextQuarter } from "./Quarter.js";
 
 function init() {
     const startButton = document.getElementById("startGameBtn");
@@ -18,7 +17,7 @@ function startGame() {
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
-    window.location.href = "../mainGame.html";
+    window.location.href = "../mainGame/mainGame.html";
 }
 
 const gameState = {
