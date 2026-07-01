@@ -34,3 +34,6 @@ const gameState = {
 localStorage.setItem("gameState", JSON.stringify(gameState));
 
 
+init();
+
+
