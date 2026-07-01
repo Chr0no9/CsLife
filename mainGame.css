@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #FFDDD2;
+    font-family: "Times New Roman", serif;
+}
+
+/* Main game panel */
+
+.main-game-container {
+    background-color: #EDF6F9;
+
+    width: 250px;
+    padding: 20px;
+
+    border-radius: 12px;
+
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+
+    .stats-list {
+        text-align: left;
+        margin-top: 15px;
+    }
+
+    .stats-list p {
+        margin: 8px 0;
+        font-size: 17px;
+    }
+}
+
+#nameDisplay,
+#quarterDisplay {
+    font-size: 18px;
+    color: #006D77;
+    margin-bottom: 12px;
+}
+
+/* Buttons */
+
+button {
+    width: 100%;
+
+    background-color: #83C5BE;
+    color: black;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px;
+    margin-top: 10px;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #E29578;
+}
+
+/* Stats Dialog */
+
+.hidden {
+    display: none;
+}
+
+.dialog {
+    position: fixed;
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-box {
+    background-color: #EDF6F9;
+
+    width: 350px;
+    padding: 25px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dialog-box h2 {
+    color: #006D77;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.dialog-box p {
+    margin: 8px 0;
+    font-size: 17px;
+}
+
+#closeStatsBtn {
+    margin-top: 20px;
+}

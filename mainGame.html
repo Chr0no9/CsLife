@@ -1,3 +1,45 @@
-<div>Name: ... </div>
-<div>Quarter: ... </div>
-<button>view stats</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS Life</title>
+    <link rel="stylesheet" href="./mainGame.css">
+</head>
+
+<body>
+
+    <div class="main-game-container">
+        <div id="nameDisplay">Name: ...</div>
+        <div id="quarterDisplay">Quarter: ...</div>
+
+        <button id="viewStatsBtn">View Stats</button>
+        <button id="continueBtn">Continue</button>
+
+        <div id="statsDialog" class="dialog" style="display: none;">
+            <div class="dialog-box">
+                <h2>Your Stats</h2>
+
+                <div class="stats-list">
+                    <p id="statName">Name:</p>
+                    <p id="statTrait">Trait:</p>
+
+                    <p id="statHealth">Health:</p>
+                    <p id="statHappiness">Happiness:</p>
+                    <p id="statMoney">Money:</p>
+
+                    <p id="statIntellect">Intellect:</p>
+                    <p id="statCoding">Coding:</p>
+                    <p id="statSocial">Social:</p>
+
+                    <p id="statGpa">GPA:</p>
+                    <p id="statRelationship">Relationship Status:</p>
+                </div>
+
+                <button id="closeStatsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./mainGame.js"></script>
+
+</body>
+</html>
