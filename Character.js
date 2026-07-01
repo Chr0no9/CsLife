@@ -12,6 +12,8 @@ export function createPlayer(name, traitName) {
     player.social = selectedTrait.stats.social;
 
     console.log(player);
+
+    return player;
 }
 
 
