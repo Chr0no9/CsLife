@@ -33,17 +33,17 @@ document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
 
-document
-    .getElementById("submitAllocationBtn")
-    .addEventListener("click", submitAllocation);
+// document
+//     .getElementById("submitAllocationBtn")
+//     .addEventListener("click", submitAllocation);
 
-function updateStats() {
-    document.getElementById("nameDisplay").textContent =
-        `Name: ${player.name}`;
+// function updateStats() {
+//     document.getElementById("nameDisplay").textContent =
+//         `Name: ${player.name}`;
 
-    document.getElementById("quarterDisplay").textContent =
-        `Year: ${gameState.year} - ${gameState.quarter}`;
-}
+//     document.getElementById("quarterDisplay").textContent =
+//         `Year: ${gameState.year} - ${gameState.quarter}`;
+// }
 
 
 

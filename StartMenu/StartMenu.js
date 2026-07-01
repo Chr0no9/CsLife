@@ -6,5 +6,5 @@ newGameBtn.addEventListener("click", () => {
 });
 
 continueBtn.addEventListener("click", () => {
-    window.location.href = "../mainGame.html";
+    window.location.href = "../mainGame/mainGame.html";
 });
