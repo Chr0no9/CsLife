@@ -36,7 +36,7 @@ function NextYear(gameState) {
     // is it summer? yes --> nextYear() & quarter == fall --> stop
  * 
 */
-function NextQuarter(gameState) {
+export function NextQuarter(gameState) {
 
     if (gameState.endgame === true) {
         return;

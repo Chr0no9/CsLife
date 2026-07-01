@@ -30,7 +30,7 @@ const player = {
     coding: 0,
     social: 0,
 
-    gpa: 3.0,
+    gpa: 2.8,
     relationshipStatus: "Single",
     internship: null,
     jobOffer: null
