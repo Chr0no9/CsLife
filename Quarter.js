@@ -1,36 +1,3 @@
-import { createPlayer } from "../Character.js";
-
-function init() {
-    const startButton = document.getElementById("startGameBtn");
-
-    startButton.addEventListener("click", startGame);
-}
-
-function startGame() {
-    const name = document.getElementById("playerName").value;
-    const traitName = document.getElementById("traitSelect").value;
-
-    const player = createPlayer(name, traitName);
-
-    gameState.currentScreen = "QuarterStart";
-
-    localStorage.setItem("player", JSON.stringify(player));
-    localStorage.setItem("gameState", JSON.stringify(gameState));
-
-    window.location.href = "../mainGame.html";
-}
-
-const gameState = {
-    year: 1,
-    quarter: "Fall",
-
-    currentScreen: "MainMenu",
-    currentEvent: null,
-    currentMiniGame: null,
-    endgame: false
-};
-
-
 
 /*
 ############################### QUARTER SYSTEM #####################################3
@@ -110,7 +77,6 @@ function NextQuarter(gameState) {
     }
 }
 
-init();
 
 //######################################################################################
 

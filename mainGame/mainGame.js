@@ -28,3 +28,33 @@ document.getElementById("viewStatsBtn").addEventListener("click", () => {
 document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
+
+
+
+//Main game loop functions
+
+function startQuarter() {
+
+}
+
+function timeAllocation() {
+
+}
+
+function finishMiniGame() {
+
+}
+
+function finishEvents() {
+
+}
+
+function finishQuarter() {
+
+    nextQuarter(gameState);
+
+    saveGame();
+
+    startQuarter();
+
+}
