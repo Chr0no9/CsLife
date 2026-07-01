@@ -1,4 +1,4 @@
-import { nextQuarter } from "../Quarter.js";
+import { NextQuarter } from "../Quarter.js";
 import { saveGame } from "../DataStorage.js";
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 
