@@ -2,9 +2,9 @@ const newGameBtn = document.querySelector(".newGameBtn");
 const continueBtn = document.querySelector(".continueBtn");
 
 newGameBtn.addEventListener("click", () => {
-    window.location.href = "../Game/Game.html";
+    window.location.href = "../Game/CharacterSelect.html";
 });
 
 continueBtn.addEventListener("click", () => {
-    window.location.href = "../mainGame.html";
+    window.location.href = "../mainGame/mainGame.html";
 });
