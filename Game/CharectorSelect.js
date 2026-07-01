@@ -24,12 +24,13 @@ function startGame() {
 const gameState = {
     year: 1,
     quarter: "Fall",
-
-    currentScreen: "MainMenu",
+    currentScreen: "QuarterStart",
     currentEvent: null,
     currentMiniGame: null,
     event_done: true,
     endgame: false
 };
+
+localStorage.setItem("gameState", JSON.stringify(gameState));
 
 
