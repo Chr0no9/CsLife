@@ -1,10 +1,21 @@
 import { createPlayer } from "../Character.js";
 import { NextQuarter } from "../Quarter.js";
-
+let selectedAvatar = "";
 function init() {
     const startButton = document.getElementById("startGameBtn");
 
     startButton.addEventListener("click", startGame);
+
+    const avatars = document.querySelectorAll(".avatar-option");
+
+    avatars.forEach((avatar) => {
+        avatar.addEventListener("click", () => {
+            avatars.forEach((a) => a.classList.remove("selected"));
+
+            avatar.classList.add("selected");
+            selectedAvatar = avatar.dataset.avatar;
+        });
+    });
 }
 
 function startGame() {
@@ -12,6 +23,8 @@ function startGame() {
     const traitName = document.getElementById("traitSelect").value;
 
     const player = createPlayer(name, traitName);
+
+    player.avatar = selectedAvatar;
 
     gameState.currentScreen = "QuarterStart";
 
