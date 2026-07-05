@@ -1,11 +1,19 @@
 import { NextQuarter } from "../Quarter.js";
 import { saveGame } from "../DataStorage.js";
+
 const gameState = JSON.parse(localStorage.getItem("gameState"));
+//document.getElementById("playerAvatar").src = player.avatar;
 
 
 
 const player = JSON.parse(localStorage.getItem("player"));
 const statsDialog = document.getElementById("statsDialog");
+
+const playerAvatar = document.getElementById("playerAvatar");
+
+if (player.avatar) {
+    playerAvatar.src = player.avatar;
+}
 
 document.getElementById("nameDisplay").textContent =
     `Name: ${player.name}`;
