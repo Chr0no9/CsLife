@@ -1,5 +1,6 @@
 import { createPlayer } from "../Character.js";
 import { NextQuarter } from "../Quarter.js";
+import { saveGame } from "../DataStorage.js";
 
 function init() {
     const startButton = document.getElementById("startGameBtn");
@@ -17,6 +18,11 @@ function startGame() {
 
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("gameState", JSON.stringify(gameState));
+
+    saveGame({
+    player: player,
+    gameState: gameState
+});
 
     window.location.href = "../mainGame/mainGame.html";
 }

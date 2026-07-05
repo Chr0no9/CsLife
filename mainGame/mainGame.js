@@ -76,7 +76,7 @@ let miniGameQueue = [];
 
 function timeAllocation() {
     //start with 10 points to chose what to do with your time
-    document.getElementById("allocationMessage").textContent = "";    
+    document.getElementById("allocationMessage").textContent = "";
 }
 function submitAllocation() {
     quarterPlan.study = Number(document.getElementById("studyInput").value);
@@ -148,7 +148,13 @@ function finishQuarter() {
 
     nextQuarter(gameState);
 
-    saveGame(player, gameState);
+    localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+
+    saveGame({
+        player: player,
+        gameState: gameState
+    });
 
 
     if (gameState.endgame === true) {
