@@ -41,17 +41,14 @@ document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
 
-// document
-//     .getElementById("submitAllocationBtn")
-//     .addEventListener("click", submitAllocation);
 
-// function updateStats() {
-//     document.getElementById("nameDisplay").textContent =
-//         `Name: ${player.name}`;
+function updateStats() {
+    document.getElementById("nameDisplay").textContent =
+        `Name: ${player.name}`;
 
-//     document.getElementById("quarterDisplay").textContent =
-//         `Year: ${gameState.year} - ${gameState.quarter}`;
-// }
+    document.getElementById("quarterDisplay").textContent =
+        `Year: ${gameState.year} - ${gameState.quarter}`;
+}
 
 
 
@@ -78,37 +75,99 @@ const quarterPlan = {
     work: 0,
     rest: 0
 };
+let pointsLeft = 5;
 let miniGameQueue = [];
 
 
 
 function timeAllocation() {
-    //start with 10 points to chose what to do with your time
-    document.getElementById("allocationMessage").textContent = "";
+    //start with 5 points to chose what to do with your time
+    document.getElementById("allocationModal").style.display = "flex";
+
+    pointsLeft = 5;
+
+    quarterPlan.study = 0;
+    quarterPlan.coding = 0;
+    quarterPlan.social = 0;
+    quarterPlan.work = 0;
+    quarterPlan.rest = 0;
+
+    updateAllocationDisplay();
 }
+
 function submitAllocation() {
-    quarterPlan.study = Number(document.getElementById("studyInput").value);
-    quarterPlan.coding = Number(document.getElementById("codingInput").value);
-    quarterPlan.social = Number(document.getElementById("socialInput").value);
-    quarterPlan.work = Number(document.getElementById("workInput").value);
-    quarterPlan.rest = Number(document.getElementById("restInput").value);
+    // quarterPlan.study = Number(document.getElementById("studyInput").value);
+    // quarterPlan.coding = Number(document.getElementById("codingInput").value);
+    // quarterPlan.social = Number(document.getElementById("socialInput").value);
+    // quarterPlan.work = Number(document.getElementById("workInput").value);
+    // quarterPlan.rest = Number(document.getElementById("restInput").value);
 
-    const total =
-        quarterPlan.study +
-        quarterPlan.coding +
-        quarterPlan.social +
-        quarterPlan.work +
-        quarterPlan.rest;
+    // const total =
+    //     quarterPlan.study +
+    //     quarterPlan.coding +
+    //     quarterPlan.social +
+    //     quarterPlan.work +
+    //     quarterPlan.rest;
 
-    if (total !== 10) {
+    // if (total !== 10) {
+    //     document.getElementById("allocationMessage").textContent =
+    //         "You must use exactly 10 time blocks.";
+    //     return;
+    // }
+
+    if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
-            "You must use exactly 10 time blocks.";
+            "You must allocate all 5 points first.";
         return;
     }
+
+    document.getElementById("allocationModal").style.display = "none";
 
     constructMiniGameQueue();
     startNextMiniGame();
 }
+
+function updateAllocationDisplay() {
+    document.getElementById("pointsLeftDisplay").textContent =
+        `Points to allocate: ${pointsLeft}`;
+
+    document.getElementById("codingPoints").textContent = quarterPlan.coding;
+    document.getElementById("studyPoints").textContent = quarterPlan.study;
+    document.getElementById("socialPoints").textContent = quarterPlan.social;
+    document.getElementById("workPoints").textContent = quarterPlan.work;
+    document.getElementById("restPoints").textContent = quarterPlan.rest;
+
+    document.getElementById("allocationMessage").textContent = "";
+}
+
+document.querySelectorAll(".plusBtn").forEach((button) => {
+    button.addEventListener("click", () => {
+        const category = button.dataset.category;
+
+        if (pointsLeft > 0) {
+            quarterPlan[category]++;
+            pointsLeft--;
+            updateAllocationDisplay();
+        }
+    });
+});
+
+document.querySelectorAll(".minusBtn").forEach((button) => {
+    button.addEventListener("click", () => {
+        const category = button.dataset.category;
+
+        if (quarterPlan[category] > 0) {
+            quarterPlan[category]--;
+            pointsLeft++;
+            updateAllocationDisplay();
+        }
+    });
+});
+
+document
+    .getElementById("confirmAllocationBtn")
+    .addEventListener("click", submitAllocation);
+
 function constructMiniGameQueue() {
     miniGameQueue = [];
 

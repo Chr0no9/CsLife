@@ -98,12 +98,13 @@ button:hover {
 }
 
 .dialog-box {
-    background-color: #EDF6F9;
+    background-color: #FFDDD2;
 
     width: 350px;
     padding: 25px;
 
     border-radius: 12px;
+    border: 3px solid #E29578; 
 
     text-align: center;
 
@@ -111,7 +112,7 @@ button:hover {
 }
 
 .dialog-box h2 {
-    color: #006D77;
+    color: #E29578;
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -119,8 +120,121 @@ button:hover {
 .dialog-box p {
     margin: 8px 0;
     font-size: 17px;
+    color: #006D77;
 }
 
 #closeStatsBtn {
     margin-top: 20px;
+}
+
+/* allocation dialog */
+#allocationModal .dialog-box {
+    background-color: #FFDDD2;
+
+    width: 450px;
+    padding: 30px;
+
+    border-radius: 12px;
+    border: 4px solid #E29578;
+
+    text-align: center;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+#allocationModal h2 {
+    color: #E29578;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#pointsLeftDisplay {
+    color: #006D77;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.allocation-row {
+    display: grid;
+    grid-template-columns: 1fr 50px 40px 50px;
+
+    align-items: center;
+    gap: 10px;
+
+    margin: 15px 0;
+}
+
+.allocation-row span:first-child {
+    text-align: left;
+
+    color: #006D77;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.plusBtn {
+    background-color: #83C5BE;
+    color: black;
+
+    border: none;
+    border-radius: 8px;
+
+    width: 50px;
+    padding: 8px;
+
+    cursor: pointer;
+}
+
+.minusBtn {
+    background-color: #E29578;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    width: 50px;
+    padding: 8px;
+
+    cursor: pointer;
+}
+
+.plusBtn:hover {
+    background-color: #006D77;
+    color: white;
+}
+
+.minusBtn:hover {
+    background-color: #d17d5d;
+}
+
+#confirmAllocationBtn {
+    width: 100%;
+
+    margin-top: 20px;
+    padding: 12px;
+
+    background-color: #006D77;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#confirmAllocationBtn:hover {
+    background-color: #83C5BE;
+    color: black;
+}
+
+#allocationMessage {
+    margin-top: 15px;
+
+    color: #E29578;
+    font-weight: bold;
+    font-size: 16px;
 }
