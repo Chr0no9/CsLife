@@ -39,3 +39,12 @@ h1 {
     color: white;
     transform: scale(1.05);
 }
+
+.saveMessage {
+    color: #006D77;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 12px;
+    min-height: 24px;
+    text-align: center;
+}
