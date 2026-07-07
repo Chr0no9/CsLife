@@ -63,6 +63,23 @@ button:hover {
     background-color: #E29578;
 }
 
+#playerAvatar {
+    position: fixed;
+
+    top: 60%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 500px;
+    height: 500px;
+
+    object-fit: cover;
+
+    border: 4px solid #006D77;
+    border-radius: 12px;
+}
+
 /* Stats Dialog */
 
 .hidden {

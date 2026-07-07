@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Character</title>
+    <link rel="stylesheet" href="./CharacterSelect.css">
+</head>
+
+<body>
+
+<div class="character-container">
+    <h1>Create Your Character</h1>
+
+    <label for="playerName">Name</label>
+    <input type="text" id="playerName" placeholder="Enter your name" />
+
+    <label for="traitSelect">Trait</label>
+    <select id="traitSelect">
+        <option value="Studious">Studious</option>
+        <option value="Well Rounded">Well Rounded</option>
+        <option value="Social Butterfly">Social Butterfly</option>
+        <option value="Wealthy">Wealthy</option>
+    </select>
+
+    <div class="avatar-selection">
+        <img src="./avatar-images/female1.png" class="avatar-option" data-avatar="../CharacterSelect/avatar-images/female1.png">
+        <img src="./avatar-images/female2.png" class="avatar-option" data-avatar="../CharacterSelect/avatar-images/female2.png">
+        <img src="./avatar-images/male1.png" class="avatar-option" data-avatar="../CharacterSelect/avatar-images/male1.png">
+        <img src="./avatar-images/male2.png" class="avatar-option" data-avatar="../CharacterSelect/avatar-images/male2.png">
+    </div>
+
+    <button id="startGameBtn">Start Game</button>
+</div>
+
+<script type="module" src="./CharacterSelect.js"></script>
+
+</body>
+</html>

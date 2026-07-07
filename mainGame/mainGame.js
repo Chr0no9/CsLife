@@ -1,11 +1,19 @@
-import { nextQuarter } from "../Quarter.js";
+import { NextQuarter } from "../Quarter.js";
 import { saveGame } from "../DataStorage.js";
+
 const gameState = JSON.parse(localStorage.getItem("gameState"));
+//document.getElementById("playerAvatar").src = player.avatar;
 
 
 
 const player = JSON.parse(localStorage.getItem("player"));
 const statsDialog = document.getElementById("statsDialog");
+
+const playerAvatar = document.getElementById("playerAvatar");
+
+if (player.avatar) {
+    playerAvatar.src = player.avatar;
+}
 
 document.getElementById("nameDisplay").textContent =
     `Name: ${player.name}`;
@@ -33,17 +41,17 @@ document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
 
-document
-    .getElementById("submitAllocationBtn")
-    .addEventListener("click", submitAllocation);
+// document
+//     .getElementById("submitAllocationBtn")
+//     .addEventListener("click", submitAllocation);
 
-function updateStats() {
-    document.getElementById("nameDisplay").textContent =
-        `Name: ${player.name}`;
+// function updateStats() {
+//     document.getElementById("nameDisplay").textContent =
+//         `Name: ${player.name}`;
 
-    document.getElementById("quarterDisplay").textContent =
-        `Year: ${gameState.year} - ${gameState.quarter}`;
-}
+//     document.getElementById("quarterDisplay").textContent =
+//         `Year: ${gameState.year} - ${gameState.quarter}`;
+// }
 
 
 
@@ -76,7 +84,7 @@ let miniGameQueue = [];
 
 function timeAllocation() {
     //start with 10 points to chose what to do with your time
-    document.getElementById("allocationMessage").textContent = "";    
+    document.getElementById("allocationMessage").textContent = "";
 }
 function submitAllocation() {
     quarterPlan.study = Number(document.getElementById("studyInput").value);
@@ -148,7 +156,13 @@ function finishQuarter() {
 
     nextQuarter(gameState);
 
-    saveGame(player, gameState);
+    localStorage.setItem("player", JSON.stringify(player));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+
+    saveGame({
+        player: player,
+        gameState: gameState
+    });
 
 
     if (gameState.endgame === true) {

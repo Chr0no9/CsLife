@@ -1,10 +1,23 @@
 import { createPlayer } from "../Character.js";
-import { NextQuarter } from "./Quarter.js";
+import { NextQuarter } from "../Quarter.js";
+let selectedAvatar = "";
+import { saveGame } from "../DataStorage.js";
 
 function init() {
     const startButton = document.getElementById("startGameBtn");
 
     startButton.addEventListener("click", startGame);
+
+    const avatars = document.querySelectorAll(".avatar-option");
+
+    avatars.forEach((avatar) => {
+        avatar.addEventListener("click", () => {
+            avatars.forEach((a) => a.classList.remove("selected"));
+
+            avatar.classList.add("selected");
+            selectedAvatar = avatar.dataset.avatar;
+        });
+    });
 }
 
 function startGame() {
@@ -13,12 +26,19 @@ function startGame() {
 
     const player = createPlayer(name, traitName);
 
+    player.avatar = selectedAvatar;
+
     gameState.currentScreen = "QuarterStart";
 
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
-    window.location.href = "../mainGame.html";
+    saveGame({
+    player: player,
+    gameState: gameState
+});
+
+    window.location.href = "../mainGame/mainGame.html";
 }
 
 const gameState = {
@@ -32,5 +52,8 @@ const gameState = {
 };
 
 localStorage.setItem("gameState", JSON.stringify(gameState));
+
+
+init();
 
 
