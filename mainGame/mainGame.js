@@ -56,6 +56,8 @@ function updateStats() {
 //Main game loop functions
 
 function startQuarter() {
+    const continueButton = document.getElementById("continueBtn");
+    continueButton.disabled = true;
 
 
 
@@ -63,7 +65,8 @@ function startQuarter() {
 
     gameState.currentEvent = null;
     gameState.currentMiniGame = null;
-    gameState.event_done = false;
+    gameState.miniGameDone = false;
+    gameState.eventDone = false;
 
     timeAllocation();
 }
@@ -122,6 +125,9 @@ function submitAllocation() {
     }
 
     document.getElementById("allocationModal").style.display = "none";
+
+
+ 
 
     constructMiniGameQueue();
     startNextMiniGame();
@@ -193,7 +199,8 @@ function constructMiniGameQueue() {
 }
 function startNextMiniGame() {
     if (miniGameQueue.length === 0) {
-        finishMiniGame();
+        gameState.miniGameDone = true;
+        finishMiniGames();
         return;
     }
 
@@ -201,20 +208,32 @@ function startNextMiniGame() {
 
     console.log("Starting mini-game:", nextType);
 
-    // do mini game
+    // Temporary: skip the actual mini-game
+    startNextMiniGame();
 }
-function finishMiniGame() {
+function finishMiniGames() {
+    if (!gameState.miniGameDone) {
+        return;
+    }
 
+    // Temporary: skip the event system
+    gameState.eventDone = true;
+
+    finishEvents();
 }
 
 function finishEvents() {
+      if (!gameState.eventDone) {
+        return;
+    }
 
+    finishQuarter();
 }
 
 function finishQuarter() {
 
-    nextQuarter(gameState);
-
+    NextQuarter(gameState);
+    updateStats();
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
@@ -229,8 +248,11 @@ function finishQuarter() {
         return;
     }
 
-    startQuarter();
+    document.getElementById("continueBtn").disabled = false;
+
 
 }
 
-startQuarter();
+document
+    .getElementById("continueBtn")
+    .addEventListener("click", startQuarter);

@@ -47,7 +47,8 @@ const gameState = {
     currentScreen: "QuarterStart",
     currentEvent: null,
     currentMiniGame: null,
-    event_done: true,
+    miniGameDone: false,
+    eventDone: false,
     endgame: false
 };
 
