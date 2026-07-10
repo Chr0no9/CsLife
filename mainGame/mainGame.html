@@ -41,6 +41,53 @@
         </div>
     </div>
 
+    <div id="allocationModal" class="dialog">
+        <div class="dialog-box">
+            <h2>Plan Your Quarter</h2>
+
+            <p id="pointsLeftDisplay">Points to allocate: 5</p>
+
+            <div class="allocation-row">
+                <span>Coding</span>
+                <button class="minusBtn" data-category="coding">-</button>
+                <span id="codingPoints">0</span>
+                <button class="plusBtn" data-category="coding">+</button>
+            </div>
+
+            <div class="allocation-row">
+                <span>Study</span>
+                <button class="minusBtn" data-category="study">-</button>
+                <span id="studyPoints">0</span>
+                <button class="plusBtn" data-category="study">+</button>
+            </div>
+
+            <div class="allocation-row">
+                <span>Social</span>
+                <button class="minusBtn" data-category="social">-</button>
+                <span id="socialPoints">0</span>
+                <button class="plusBtn" data-category="social">+</button>
+            </div>
+
+            <div class="allocation-row">
+                <span>Work</span>
+                <button class="minusBtn" data-category="work">-</button>
+                <span id="workPoints">0</span>
+                <button class="plusBtn" data-category="work">+</button>
+            </div>
+
+            <div class="allocation-row">
+                <span>Rest</span>
+                <button class="minusBtn" data-category="rest">-</button>
+                <span id="restPoints">0</span>
+                <button class="plusBtn" data-category="rest">+</button>
+            </div>
+
+            <button id="confirmAllocationBtn">Start Quarter</button>
+
+            <p id="allocationMessage"></p>
+        </div>
+    </div>
+
     <script type="module" src="./mainGame.js"></script>
 
 </body>
