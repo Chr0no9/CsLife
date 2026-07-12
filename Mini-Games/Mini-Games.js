@@ -53,6 +53,7 @@ class MiniGame {
 class StudyMiniGame extends MiniGame {
     constructor(title, prompt, type, choices, CorrectAnswer, IncreaseStat, DecreaseStat) {
         super("study", title, prompt, IncreaseStat, DecreaseStat);
+        this.type = type;
         this.choices = choices;
         this.CorrectAnswer = CorrectAnswer;
     }
@@ -100,7 +101,7 @@ class SocialMiniGame extends MiniGame {
 ############################### STUDYING MINI-GAMES ####################################
 */ 
 
-const StudyMiniGame = [
+export const studyMiniGame = [
     
     // Study Number 1
     new StudyMiniGame(
@@ -221,4 +222,12 @@ const StudyMiniGame = [
             gpa: -0.2
         }
     ),
-]
+];
+
+export const codingMiniGames = [
+    // Coding placeholder
+];
+
+export const socialMiniGames = [
+    // Social placeholder
+];
