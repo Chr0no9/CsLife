@@ -27,6 +27,15 @@ Maybe a way I can implement it is by doing +5 Coding skills if its correct and t
 
 // Social: Text Message Replies from your friend or family member, Dialogue Choice
 
+
+/*
+ * What stats need to change in mini-games:
+ * Studying: intellect and gpa
+ * Coding: intellect and coding
+ * Social: Social and Happiness | MAYBE Coding, Money and relationshipStatus <-- Haven't decided
+ */
+
+
 // Dialog Tree, Timed Decisions (multiple choice but the player gets 5 seconds to answer)
 // Text message simulator 
 // Party Decisions 
@@ -95,12 +104,13 @@ class CodingMiniGame extends MiniGame {
 }
 
 class SocialMiniGame extends MiniGame {
-    constructor(title, prompt, type, choices, CorrectAnswer, IncreaseStat, DecreaseStat) {
-        super("social", title, prompt, type, choices, CorrectAnswer, IncreaseStat, DecreaseStat);
+    constructor(title, prompt, type, choices, choiceEffects) {
+        super("social", title, prompt, type, choices, null, null, null);
+        this.choiceEffects = choiceEffects;
     }
 
     ChoiceResult(SelectedAnswer) {
-       return this.choices[SelectedAnswer];
+       return this.choiceEffects[SelectedAnswer];
     }
 }
 
@@ -234,7 +244,7 @@ const studyMiniGames = [
     // Study Number 6
     new StudyMiniGame(
         "Office Hours",
-        "You're stuck on a programming assignment for hours and don't have clue how to fix a bug. What should you do?",
+        "You're stuck on a programming assignment for hours and don't have a clue how to fix a bug. What should you do?",
         "multipleChoice",
         [
             "Copy another student's code",
@@ -360,10 +370,10 @@ const studyMiniGames = [
     // Study Number 11
     new StudyMiniGame(
         "Debugging",
-        "Your program doesn't work after doing some changes. What is the first thing you should do before continueing?",
+        "Your program doesn't work after doing some changes. What is the first thing you should do before continuing?",
         "multipleChoice",
         [
-            "Give up alltogether",
+            "Give up altogether",
             "Delete your entire program and start all over",
             "Restart your computer",
             "Read the error messages and make a test case"
@@ -689,7 +699,7 @@ const codingMiniGames = [
                 {
                     name = new_name;
                 }
-        }`,
+        };`,
         "multipleChoice",
         [
             "public",
@@ -937,11 +947,703 @@ const codingMiniGames = [
             coding: -1,
         }
     ),
+]
 
+/*
+############################### SOCIAL MINI-GAMES ####################################
+*/ 
 
+const socialMiniGames = [
+    
+    // Social Number 1
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
 
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
 
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
 
+    // Social Number 2
+    new SocialMiniGame(
+        "Baba After Class",
+        "Your friends ask you if you want to get some boba after class. What do you want to do?",
+        "multipleChoice",
+        [
+            "Let's get boba and hang out after!", // Option 1
+            "Only get boba, you're busy later", // Option 2
+            "Decline and study instead", // Option 3
+            "Stay on campus and get dining hall food" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                money: -10,
+                coding: -1
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -10,
+                coding: 1
+            },
 
+            // Option 3
+            {
+                social: -2,
+                happiness: -3,
+                intellect: 2,
+                coding: 2
+            },
 
+            // Option 4
+            {
+                social: -4,
+                happiness: -3,
+                intellect: 1,
+                coding: 1
+            },
+        ]
+    ),
+
+    // Social Number 3
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 4
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 5
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 6
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 7
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 8
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 9
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 10
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 11
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 12
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 13
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 14
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    // Social Number 15
+    new SocialMiniGame(
+        "Weekend Party",
+        "It's Friday night after a long week of programming. Your friends invite you to go to a party, but you got an important assignment due Sunday. What do you do?",
+        "multipleChoice",
+        [
+            "Go to that party and party all night", // Option 1
+            "Go for a little and then go home", // Option 2
+            "Stay home and work on your assignment", // Option 3
+            "Just stay home and relax" // Option 4
+        ],
+        [
+            // Option 1
+            {
+                social: 2,
+                happiness: 2,
+                coding: -1,
+                health: -1,
+                money: -50
+            },
+            
+            // Option 2 
+            {
+                social: 1,
+                happiness: 1,
+                money: -30,
+            },
+
+            // Option 3
+            {
+                intellect: 2,
+                happiness: -1,
+                coding: 1,
+                social: -1
+            },
+
+            // Option 4
+            {
+                health: -1,
+                happiness: 1,
+                social: -4,
+                coding: -2,
+            },
+        ]
+    ),
+
+    
 ]
