@@ -99,25 +99,6 @@ function timeAllocation() {
 }
 
 function submitAllocation() {
-    // quarterPlan.study = Number(document.getElementById("studyInput").value);
-    // quarterPlan.coding = Number(document.getElementById("codingInput").value);
-    // quarterPlan.social = Number(document.getElementById("socialInput").value);
-    // quarterPlan.work = Number(document.getElementById("workInput").value);
-    // quarterPlan.rest = Number(document.getElementById("restInput").value);
-
-    // const total =
-    //     quarterPlan.study +
-    //     quarterPlan.coding +
-    //     quarterPlan.social +
-    //     quarterPlan.work +
-    //     quarterPlan.rest;
-
-    // if (total !== 10) {
-    //     document.getElementById("allocationMessage").textContent =
-    //         "You must use exactly 10 time blocks.";
-    //     return;
-    // }
-
     if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
             "You must allocate all 5 points first.";
@@ -125,12 +106,19 @@ function submitAllocation() {
     }
 
     document.getElementById("allocationModal").style.display = "none";
-
-
- 
+    document.getElementById("continueBtn").style.display = "block";
 
     constructMiniGameQueue();
-    startNextMiniGame();
+
+    localStorage.setItem(
+        "quarterPlan",
+        JSON.stringify(quarterPlan)
+    );
+
+    localStorage.setItem(
+        "miniGameQueue",
+        JSON.stringify(miniGameQueue)
+    );
 }
 
 function updateAllocationDisplay() {
@@ -177,26 +165,21 @@ document
 function constructMiniGameQueue() {
     miniGameQueue = [];
 
-    for (let i = 0; i < quarterPlan.study; i++) {
-        miniGameQueue.push("study");
-    }
-
     for (let i = 0; i < quarterPlan.coding; i++) {
         miniGameQueue.push("coding");
+    }
+
+    for (let i = 0; i < quarterPlan.study; i++) {
+        miniGameQueue.push("study");
     }
 
     for (let i = 0; i < quarterPlan.social; i++) {
         miniGameQueue.push("social");
     }
 
-    for (let i = 0; i < quarterPlan.work; i++) {
-        miniGameQueue.push("work");
-    }
-
-    for (let i = 0; i < quarterPlan.rest; i++) {
-        miniGameQueue.push("rest");
-    }
+    console.log("Created mini-game queue:", miniGameQueue);
 }
+
 function startNextMiniGame() {
     if (miniGameQueue.length === 0) {
         gameState.miniGameDone = true;
@@ -253,6 +236,22 @@ function finishQuarter() {
 
 }
 
+// document
+//     .getElementById("continueBtn")
+//     .addEventListener("click", startQuarter);
+
 document
     .getElementById("continueBtn")
-    .addEventListener("click", startQuarter);
+    .addEventListener("click", () => {
+        localStorage.setItem(
+            "miniGameQueue",
+            JSON.stringify(miniGameQueue)
+        );
+
+        localStorage.setItem(
+            "quarterPlan",
+            JSON.stringify(quarterPlan)
+        );
+
+        window.location.href = "../Mini-Games/Mini-Games.html";
+    });
