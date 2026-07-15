@@ -6,7 +6,6 @@ const gameState = JSON.parse(localStorage.getItem("gameState"));
 //document.getElementById("playerAvatar").src = player.avatar;
 
 
-
 const player = JSON.parse(localStorage.getItem("player"));
 const statsDialog = document.getElementById("statsDialog");
 
@@ -99,6 +98,50 @@ function timeAllocation() {
     updateAllocationDisplay();
 }
 
+const MONEY_PER_WORK_POINT = 250;
+const HEALTHLOSS_PER_WORK_POINT = 4;
+const HAPPINESSLOSS_PER_WORK_POINT = 3;
+const HEALTH_PER_REST_POINT = 5;
+const HAPPINESS_PER_REST_POINT = 4;
+
+function applyTimeAllocationEffects() {
+    const moneyEarned =
+        quarterPlan.work * MONEY_PER_WORK_POINT;
+
+    const wHealthLoss =
+        quarterPlan.work * HEALTHLOSS_PER_WORK_POINT;
+
+    const wHappinessLoss =
+        quarterPlan.work * HAPPINESSLOSS_PER_WORK_POINT;
+
+    const rHealthGain =
+        quarterPlan.rest * HEALTH_PER_REST_POINT;
+
+    const rHappinessGain =
+        quarterPlan.rest * HAPPINESS_PER_REST_POINT;
+
+    player.money += moneyEarned;
+    player.health += rHealthGain - wHealthLoss;
+    player.happiness += rHappinessGain - wHappinessLoss;
+
+    if (player.health > 100) {
+        player.health = 100;
+    }
+
+    if (player.health < 0) {
+        player.health = 0;
+    }
+
+    if (player.happiness > 100) {
+        player.happiness = 100;
+    }
+
+    if (player.happiness < 0) {
+        player.happiness = 0;
+    }
+
+
+}
 function submitAllocation() {
     if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
@@ -109,6 +152,8 @@ function submitAllocation() {
     document.getElementById("allocationModal").style.display = "none";
     document.getElementById("continueBtn").style.display = "block";
 
+    applyTimeAllocationEffects();
+    localStorage.setItem("player", JSON.stringify(player));
     constructMiniGameQueue();
 
     localStorage.setItem(
