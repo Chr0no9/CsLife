@@ -1,5 +1,6 @@
 import { NextQuarter } from "../Quarter.js";
 import { saveGame } from "../DataStorage.js";
+import { getRandomEvent, applyEventEffects } from "../Events.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 //document.getElementById("playerAvatar").src = player.avatar;
@@ -199,14 +200,43 @@ function finishMiniGames() {
         return;
     }
 
-    // Temporary: skip the event system
-    gameState.eventDone = true;
+    startRandomEvent();
+}
 
-    finishEvents();
+function startRandomEvent() {
+    const randomEvent = getRandomEvent();
+
+    gameState.currentEvent = randomEvent.id;
+
+    document.getElementById("eventTitle").textContent = randomEvent.title;
+    document.getElementById("eventDescription").textContent = randomEvent.description;
+
+    const eventChoices = document.getElementById("eventChoices");
+    eventChoices.innerHTML = "";
+
+    randomEvent.choices.forEach((choice) => {
+        const choiceButton = document.createElement("button");
+        choiceButton.textContent = choice.text;
+
+        choiceButton.addEventListener("click", () => {
+            applyEventEffects(player, choice.effects);
+
+            document.getElementById("eventModal").style.display = "none";
+
+            gameState.eventDone = true;
+            gameState.event_done = true;
+
+            finishEvents();
+        });
+
+        eventChoices.appendChild(choiceButton);
+    });
+
+    document.getElementById("eventModal").style.display = "flex";
 }
 
 function finishEvents() {
-      if (!gameState.eventDone) {
+    if (!gameState.eventDone && !gameState.event_done) {
         return;
     }
 
