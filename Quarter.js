@@ -42,7 +42,7 @@ export function NextQuarter(gameState) {
         return;
     }
 
-    if (gameState.event_done === false) {
+    if (gameState.eventDone === false) {
         return;
     }
 

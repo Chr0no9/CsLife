@@ -104,7 +104,7 @@ button:hover {
     padding: 25px;
 
     border-radius: 12px;
-    border: 3px solid #E29578; 
+    border: 3px solid #E29578;
 
     text-align: center;
 
@@ -237,4 +237,14 @@ button:hover {
     color: #E29578;
     font-weight: bold;
     font-size: 16px;
+}
+
+#eventChoices button {
+    margin-top: 12px;
+}
+
+#eventDescription {
+    color: #006D77;
+    font-size: 17px;
+    margin-bottom: 20px;
 }

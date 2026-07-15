@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>CS Life</title>
     <link rel="stylesheet" href="./mainGame.css">
@@ -14,7 +15,7 @@
         <div id="quarterDisplay">Quarter: ...</div>
 
         <button id="viewStatsBtn">View Stats</button>
-        <button id="continueBtn">Continue</button>
+        <button id="continueBtn" style="display: none;">Continue</button>
 
         <div id="statsDialog" class="dialog" style="display: none;">
             <div class="dialog-box">
@@ -88,7 +89,17 @@
         </div>
     </div>
 
+    <div id="eventModal" class="dialog" style="display: none;">
+        <div class="dialog-box">
+            <h2 id="eventTitle">Event Title</h2>
+            <p id="eventDescription">Event description...</p>
+
+            <div id="eventChoices"></div>
+        </div>
+    </div>
+
     <script type="module" src="./mainGame.js"></script>
 
 </body>
+
 </html>

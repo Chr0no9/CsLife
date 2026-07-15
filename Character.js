@@ -29,6 +29,7 @@ const player = {
     intellect: 0,
     coding: 0,
     social: 0,
+    career: 0,
 
     gpa: 2.8,
     relationshipStatus: "Single",

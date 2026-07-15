@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CS Life Mini-Games</title>
+
+    <link
+        rel="stylesheet"
+        href="./Mini-Games.css"
+    >
+</head>
+
+<body>
+
+    <div class="mini-game-container">
+
+        <div class="mini-game-header">
+            <h1 id="miniGameCategory">
+                Loading Mini-Games...
+            </h1>
+
+            <p id="gameProgress">
+                Loading...
+            </p>
+        </div>
+
+        <!-- Study game -->
+
+        <div
+            id="studyGame"
+            class="game-section"
+            style="display: none;"
+        >
+            <h2 id="studyTitle">
+                Study Mini-Game
+            </h2>
+
+            <div class="question-box">
+                <p id="studyQuestion"></p>
+            </div>
+
+            <div
+                id="studyChoices"
+                class="answer-grid"
+            ></div>
+
+            <p
+                id="studyMessage"
+                class="game-message"
+            ></p>
+
+            <button
+                id="nextStudyBtn"
+                style="display: none;"
+            >
+                Continue
+            </button>
+        </div>
+
+        <!-- Coding filler -->
+
+        <div
+            id="codingGame"
+            class="game-section"
+            style="display: none;"
+        >
+            <h2>Coding Mini-Game</h2>
+
+            <div class="question-box">
+                <p>
+                    Coding mini-game coming soon!
+                </p>
+            </div>
+
+            <button id="finishCodingBtn">
+                Complete Coding Mini-Game
+            </button>
+        </div>
+
+        <!-- Social filler -->
+
+        <div
+            id="socialGame"
+            class="game-section"
+            style="display: none;"
+        >
+            <h2>Social Mini-Game</h2>
+
+            <div class="question-box">
+                <p>
+                    Social mini-game coming soon!
+                </p>
+            </div>
+
+            <button id="finishSocialBtn">
+                Complete Social Mini-Game
+            </button>
+        </div>
+
+        <!-- No saved queue error -->
+
+        <div
+            id="queueError"
+            style="display: none;"
+        >
+            <h2>No Mini-Games Found</h2>
+
+            <p>
+                Return to the main game and allocate your points again.
+            </p>
+
+            <button id="returnToMainBtn">
+                Return to Main Game
+            </button>
+        </div>
+
+        <!-- Finished screen -->
+
+        <div
+            id="finishedScreen"
+            style="display: none;"
+        >
+            <h2>All Mini-Games Complete!</h2>
+
+            <p>
+                You finished this quarter's mini-games.
+            </p>
+
+            <button id="nextQuarterBtn">
+                Continue to Next Quarter
+            </button>
+        </div>
+
+    </div>
+
+    <script
+        type="module"
+        src="./Mini-Games-Functionality.js"
+    ></script>
+
+</body>
+
+</html>

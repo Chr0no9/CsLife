@@ -1,6 +1,6 @@
 
 
-const events = [
+export const events = [
   {
     // life related events
     id: "car_breakdown",
@@ -28,7 +28,7 @@ const events = [
       },
       {
         text: "Have no Laptop",
-        effects: {happiness: -5, knowledge: -5}
+        effects: {happiness: -5, intellect: -5}
       }
     ]
   },
@@ -39,7 +39,7 @@ const events = [
     choices:[
       {
         text: "Study extra hard",
-        effects: {happiness: -10, knowledge: 10, social: -5}
+        effects: {happiness: -10, intellect: 10, social: -5}
       },
       {
         text: "Accept your fate",
@@ -81,8 +81,21 @@ const events = [
       },
       {
         text: "Decline",
-        effects: { knowledge: 10, money: -5}
+        effects: { intellect: 10, money: -5}
       }
     ]
   }
 ];
+
+export function getRandomEvent() {
+  const randomIndex = Math.floor(Math.random() * events.length);
+  return events[randomIndex];
+}
+
+export function applyEventEffects(player, effects) {
+  for (const stat in effects) {
+    if (player[stat] !== undefined) {
+      player[stat] += effects[stat];
+    }
+  }
+}
