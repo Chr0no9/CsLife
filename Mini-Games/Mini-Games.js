@@ -4,7 +4,7 @@
 // Studying
 // Getting a Job
 
-import { hasSaveData } from "./DataStorage";
+// import { hasSaveData } from "./DataStorage";
 
 /* Time Allocation determines how many mini-games appears
 They lose minus coding stats if they get it incorrectly --> Potentially adding a penalty
@@ -72,14 +72,36 @@ class MiniGame {
     }
 
     CheckAnswer(PlayerAnswer) {
+
         if (this.type !== "multipleChoice") {
             return false;
         }
 
-        return PlayerAnswer === this.CorrectAnswer;
+
+        if (PlayerAnswer === this.CorrectAnswer) {
+            return true;
+        }
+
+        return false;
     }
 
-    // Have some sort of stat changing here
+    AnswerResult(PlayerAnswer) {
+        const Correct = this.CheckAnswer(PlayerAnswer);
+        let effects;
+        
+        if (Correct) {
+            effects = this.IncreaseStat;
+        }
+
+        else {
+            effects = this.DecreaseStat;
+        }
+
+        return {
+            correct: Correct,
+            effects: effects
+        };
+    }
 }
 
 class StudyMiniGame extends MiniGame {
@@ -98,6 +120,10 @@ class SocialMiniGame extends MiniGame {
     constructor(title, prompt, type, choices, choiceEffects) {
         super("social", title, prompt, type, choices, null, null, null);
         this.choiceEffects = choiceEffects;
+    }
+
+    ChoiceEffects(choicesIndex) {
+        return this.choiceEffects[choicesIndex];
     }
 }
 
@@ -1553,6 +1579,10 @@ const socialMiniGames = [
             },
         ]
     ),
-
-    
 ]
+
+export {
+    studyMiniGames,
+    codingMiniGames,
+    socialMiniGames
+}
