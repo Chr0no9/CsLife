@@ -3,8 +3,6 @@ import { saveGame } from "../DataStorage.js";
 import { getRandomEvent, applyEventEffects } from "../Events.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
-//document.getElementById("playerAvatar").src = player.avatar;
-
 
 const player = JSON.parse(localStorage.getItem("player"));
 const statsDialog = document.getElementById("statsDialog");
@@ -67,8 +65,6 @@ function startQuarter() {
     gameState.currentMiniGame = null;
     gameState.miniGameDone = false;
     gameState.eventDone = false;
-
-    timeAllocation();
 }
 
 const quarterPlan = {
@@ -78,7 +74,7 @@ const quarterPlan = {
     work: 0,
     rest: 0
 };
-let pointsLeft = 5;
+let pointsLeft = 3;
 let miniGameQueue = [];
 
 
@@ -87,7 +83,7 @@ function timeAllocation() {
     //start with 5 points to chose what to do with your time
     document.getElementById("allocationModal").style.display = "flex";
 
-    pointsLeft = 5;
+    pointsLeft = 3;
 
     quarterPlan.study = 0;
     quarterPlan.coding = 0;
@@ -97,6 +93,19 @@ function timeAllocation() {
 
     updateAllocationDisplay();
 }
+
+document
+    .getElementById("allocatePointsBtn")
+    .addEventListener("click", timeAllocation);
+
+const allocationModal =
+    document.getElementById("allocationModal");
+
+allocationModal.addEventListener("click", (event) => {
+    if (event.target === allocationModal) {
+        allocationModal.style.display = "none";
+    }
+});
 
 const MONEY_PER_WORK_POINT = 250;
 const HEALTHLOSS_PER_WORK_POINT = 4;
@@ -145,7 +154,7 @@ function applyTimeAllocationEffects() {
 function submitAllocation() {
     if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
-            "You must allocate all 5 points first.";
+            "You must allocate all 3 points first.";
         return;
     }
 
@@ -184,11 +193,23 @@ document.querySelectorAll(".plusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (pointsLeft > 0) {
-            quarterPlan[category]++;
-            pointsLeft--;
-            updateAllocationDisplay();
+        if (pointsLeft === 0) {
+            return;
         }
+
+        if (
+            (category === "coding" || category === "study" || category === "social") &&
+            quarterPlan[category] >= 1
+        ) {
+            document.getElementById("allocationMessage").textContent =
+                "You can only allocate 1 point to Coding, Study, and Social.";
+            return;
+        }
+
+        quarterPlan[category]++;
+        pointsLeft--;
+
+        updateAllocationDisplay();
     });
 });
 
