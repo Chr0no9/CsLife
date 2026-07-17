@@ -78,7 +78,7 @@ const quarterPlan = {
     work: 0,
     rest: 0
 };
-let pointsLeft = 5;
+let pointsLeft = 3;
 let miniGameQueue = [];
 
 
@@ -87,7 +87,7 @@ function timeAllocation() {
     //start with 5 points to chose what to do with your time
     document.getElementById("allocationModal").style.display = "flex";
 
-    pointsLeft = 5;
+    pointsLeft = 3;
 
     quarterPlan.study = 0;
     quarterPlan.coding = 0;
@@ -184,8 +184,8 @@ document.querySelectorAll(".plusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (pointsLeft > 0) {
-            quarterPlan[category]++;
+        if (pointsLeft > 0 && quarterPlan[category] === 0) {
+            quarterPlan[category] = 1;
             pointsLeft--;
             updateAllocationDisplay();
         }
@@ -196,9 +196,10 @@ document.querySelectorAll(".minusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (quarterPlan[category] > 0) {
-            quarterPlan[category]--;
+        if (quarterPlan[category] === 1) {
+            quarterPlan[category] = 0;
             pointsLeft++;
+
             updateAllocationDisplay();
         }
     });
