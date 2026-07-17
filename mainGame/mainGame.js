@@ -145,7 +145,7 @@ function applyTimeAllocationEffects() {
 function submitAllocation() {
     if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
-            "You must allocate all 5 points first.";
+            "You must allocate all 3 points first.";
         return;
     }
 
