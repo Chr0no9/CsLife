@@ -1,6 +1,10 @@
+/* Global Styles */
+
 * {
     box-sizing: border-box;
 }
+
+/* Page Layout */
 
 body {
     min-height: 100vh;
@@ -15,6 +19,8 @@ body {
     color: #006D77;
     font-family: "Times New Roman", serif;
 }
+
+/* End Game Container */
 
 .end-game-container {
     width: 85%;
@@ -32,6 +38,8 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Graduation Header */
+
 h1 {
     margin-top: 0;
     margin-bottom: 10px;
@@ -45,6 +53,8 @@ h1 {
 
     font-size: 20px;
 }
+
+/* Career Result */
 
 .career-section {
     margin-bottom: 25px;
@@ -77,6 +87,8 @@ h1 {
     line-height: 1.5;
 }
 
+/* Final Statistics */
+
 .final-stats {
     width: 75%;
 
@@ -108,6 +120,8 @@ h1 {
     font-size: 19px;
     font-weight: bold;
 }
+
+/* Responsive Layout */
 
 @media (max-width: 600px) {
     .end-game-container {

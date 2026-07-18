@@ -16,70 +16,68 @@ export function createPlayer(name, traitName) {
     return player;
 }
 
-
-
 const player = {
-    name: "",
-    trait: "",
+    name : "",
+    trait : "",
 
-    health: 0,
-    happiness: 0,
-    money: 0,
+    health : 0,
+    happiness : 0,
+    money : 0,
 
-    intellect: 0,
-    coding: 0,
-    social: 0,
-    career: 0,
+    intellect : 0,
+    coding : 0,
+    social : 0,
+    career : 0,
 
-    gpa: 2.8,
-    relationshipStatus: "Single",
-    internship: null,
-    jobOffer: null
+    gpa : 2.8,
+    relationshipStatus : "Single",
+    internship : null,
+    jobOffer : null
 };
 
 const traits = [
     {
-        name: "Studious",
-        stats: {
-            health: 30,
-            happiness: 40,
-            money: 250,
-            intellect: 90,
-            coding: 70,
-            social: 5
+        name : "Studious",
+        stats : {
+            health : 30,
+            happiness : 40,
+            money : 250,
+            intellect : 90,
+            coding : 70,
+            social : 5
         }
     },
     {
-        name: "Well Rounded",
-        stats: {
-            health: 50,
-            happiness: 50,
-            money: 500,
-            intellect: 50,
-            coding: 50,
-            social: 50
+        name : "Well Rounded",
+        stats : {
+            health : 50,
+            happiness : 50,
+            money : 500,
+            intellect : 50,
+            coding : 50,
+            social : 50
         }
     },
     {
-        name: "Social Butterfly",
-        stats: {
-            health: 70,
-            happiness: 95,
-            money: 0,
-            intellect: 40,
-            coding: 10,
-            social: 90
+        name : "Social Butterfly",
+        stats : {
+            health : 70,
+            happiness : 95,
+            money : 0,
+            intellect : 40,
+            coding : 10,
+            social : 90
         }
     },
     {
-        name: "Wealthy",
-        stats: {
-            health: 80,
-            happiness: 80,
-            money: 10000,
-            intellect: 30,
-            coding: 10,
-            social: 30
+        name : "Wealthy",
+        stats : {
+            health : 80,
+            happiness : 80,
+            money : 10000,
+            intellect : 30,
+            coding : 10,
+            social : 30
         }
     }
 ];

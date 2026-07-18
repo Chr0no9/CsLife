@@ -1,4 +1,5 @@
-import { hasSaveData, loadGame } from "../DataStorage.js";
+import {hasSaveData,
+    loadGame} from "../DataStorage.js";
 
 const newGameBtn = document.querySelector(".newGameBtn");
 const continueBtn = document.querySelector(".continueBtn");
@@ -9,7 +10,6 @@ newGameBtn.addEventListener("click", () => {
 });
 
 continueBtn.addEventListener("click", () => {
-
     saveMessage.textContent = "";
 
     if (!hasSaveData()) {
