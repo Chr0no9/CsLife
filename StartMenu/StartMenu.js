@@ -1,7 +1,5 @@
 import { hasSaveData, loadGame } from "../DataStorage.js";
 
-import { hasSaveData } from "./DataStorage";
-
 const newGameBtn = document.querySelector(".newGameBtn");
 const continueBtn = document.querySelector(".continueBtn");
 const saveMessage = document.getElementById("saveMessage");
