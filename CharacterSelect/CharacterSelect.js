@@ -1,7 +1,7 @@
-import { createPlayer } from "../Character.js";
-import { NextQuarter } from "../Quarter.js";
+import {createPlayer} from "../Character.js";
+import {NextQuarter} from "../Quarter.js";
 let selectedAvatar = "";
-import { saveGame } from "../DataStorage.js";
+import {saveGame} from "../DataStorage.js";
 
 function init() {
     const startButton = document.getElementById("startGameBtn");
@@ -34,27 +34,24 @@ function startGame() {
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
     saveGame({
-    player: player,
-    gameState: gameState
-});
+        player : player,
+        gameState : gameState
+    });
 
     window.location.href = "../mainGame/mainGame.html";
 }
 
 const gameState = {
-    year: 1,
-    quarter: "Fall",
-    currentScreen: "QuarterStart",
-    currentEvent: null,
-    currentMiniGame: null,
-    miniGameDone: false,
-    eventDone: false,
-    endgame: false
+    year : 1,
+    quarter : "Fall",
+    currentScreen : "QuarterStart",
+    currentEvent : null,
+    currentMiniGame : null,
+    miniGameDone : false,
+    eventDone : false,
+    endgame : false
 };
 
 localStorage.setItem("gameState", JSON.stringify(gameState));
 
-
 init();
-
-

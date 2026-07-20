@@ -1,10 +1,9 @@
-import { NextQuarter } from "../Quarter.js";
-import { saveGame } from "../DataStorage.js";
-import { getRandomEvent, applyEventEffects } from "../Events.js";
+import {saveGame} from "../DataStorage.js";
+import {applyEventEffects,
+    getRandomEvent} from "../Events.js";
+import {NextQuarter} from "../Quarter.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
-//document.getElementById("playerAvatar").src = player.avatar;
-
 
 const player = JSON.parse(localStorage.getItem("player"));
 const statsDialog = document.getElementById("statsDialog");
@@ -15,11 +14,9 @@ if (player.avatar) {
     playerAvatar.src = player.avatar;
 }
 
-document.getElementById("nameDisplay").textContent =
-    `Name: ${player.name}`;
+document.getElementById("nameDisplay").textContent = `Name: ${player.name}`;
 
-document.getElementById("quarterDisplay").textContent =
-    `Year: ${gameState.year} - ${gameState.quarter}`;
+document.getElementById("quarterDisplay").textContent = `Year: ${gameState.year} - ${gameState.quarter}`;
 
 document.getElementById("viewStatsBtn").addEventListener("click", () => {
     document.getElementById("statName").textContent = `Name: ${player.name}`;
@@ -31,8 +28,7 @@ document.getElementById("viewStatsBtn").addEventListener("click", () => {
     document.getElementById("statCoding").textContent = `Coding: ${player.coding}`;
     document.getElementById("statSocial").textContent = `Social: ${player.social}`;
     document.getElementById("statGpa").textContent = `GPA: ${player.gpa}`;
-    document.getElementById("statRelationship").textContent =
-        `Relationship Status: ${player.relationshipStatus}`;
+    document.getElementById("statRelationship").textContent = `Relationship Status: ${player.relationshipStatus}`;
 
     statsDialog.style.display = "flex";
 });
@@ -41,25 +37,17 @@ document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
 
-
 function updateStats() {
-    document.getElementById("nameDisplay").textContent =
-        `Name: ${player.name}`;
+    document.getElementById("nameDisplay").textContent = `Name: ${player.name}`;
 
-    document.getElementById("quarterDisplay").textContent =
-        `Year: ${gameState.year} - ${gameState.quarter}`;
+    document.getElementById("quarterDisplay").textContent = `Year: ${gameState.year} - ${gameState.quarter}`;
 }
 
-
-
-
-//Main game loop functions
+// Main game loop functions
 
 function startQuarter() {
     const continueButton = document.getElementById("continueBtn");
     continueButton.disabled = true;
-
-
 
     updateStats();
 
@@ -67,26 +55,23 @@ function startQuarter() {
     gameState.currentMiniGame = null;
     gameState.miniGameDone = false;
     gameState.eventDone = false;
-
-    timeAllocation();
 }
 
 const quarterPlan = {
-    study: 0,
-    coding: 0,
-    social: 0,
-    work: 0,
-    rest: 0
+    study : 0,
+    coding : 0,
+    social : 0,
+    work : 0,
+    rest : 0
 };
 let pointsLeft = 3;
 let miniGameQueue = [];
 
-
-
 function timeAllocation() {
-    //start with 5 points to chose what to do with your time
+    // start with 5 points to chose what to do with your time
     document.getElementById("allocationModal").style.display = "flex";
 
+    pointsLeft = 3;
     pointsLeft = 3;
 
     quarterPlan.study = 0;
@@ -98,6 +83,18 @@ function timeAllocation() {
     updateAllocationDisplay();
 }
 
+document
+    .getElementById("allocatePointsBtn")
+    .addEventListener("click", timeAllocation);
+
+const allocationModal = document.getElementById("allocationModal");
+
+allocationModal.addEventListener("click", (event) => {
+    if (event.target === allocationModal) {
+        allocationModal.style.display = "none";
+    }
+});
+
 const MONEY_PER_WORK_POINT = 250;
 const HEALTHLOSS_PER_WORK_POINT = 4;
 const HAPPINESSLOSS_PER_WORK_POINT = 3;
@@ -105,20 +102,15 @@ const HEALTH_PER_REST_POINT = 5;
 const HAPPINESS_PER_REST_POINT = 4;
 
 function applyTimeAllocationEffects() {
-    const moneyEarned =
-        quarterPlan.work * MONEY_PER_WORK_POINT;
+    const moneyEarned = quarterPlan.work * MONEY_PER_WORK_POINT;
 
-    const wHealthLoss =
-        quarterPlan.work * HEALTHLOSS_PER_WORK_POINT;
+    const wHealthLoss = quarterPlan.work * HEALTHLOSS_PER_WORK_POINT;
 
-    const wHappinessLoss =
-        quarterPlan.work * HAPPINESSLOSS_PER_WORK_POINT;
+    const wHappinessLoss = quarterPlan.work * HAPPINESSLOSS_PER_WORK_POINT;
 
-    const rHealthGain =
-        quarterPlan.rest * HEALTH_PER_REST_POINT;
+    const rHealthGain = quarterPlan.rest * HEALTH_PER_REST_POINT;
 
-    const rHappinessGain =
-        quarterPlan.rest * HAPPINESS_PER_REST_POINT;
+    const rHappinessGain = quarterPlan.rest * HAPPINESS_PER_REST_POINT;
 
     player.money += moneyEarned;
     player.health += rHealthGain - wHealthLoss;
@@ -139,8 +131,6 @@ function applyTimeAllocationEffects() {
     if (player.happiness < 0) {
         player.happiness = 0;
     }
-
-
 }
 function submitAllocation() {
     if (pointsLeft !== 0) {
@@ -158,18 +148,15 @@ function submitAllocation() {
 
     localStorage.setItem(
         "quarterPlan",
-        JSON.stringify(quarterPlan)
-    );
+        JSON.stringify(quarterPlan));
 
     localStorage.setItem(
         "miniGameQueue",
-        JSON.stringify(miniGameQueue)
-    );
+        JSON.stringify(miniGameQueue));
 }
 
 function updateAllocationDisplay() {
-    document.getElementById("pointsLeftDisplay").textContent =
-        `Points to allocate: ${pointsLeft}`;
+    document.getElementById("pointsLeftDisplay").textContent = `Points to allocate: ${pointsLeft}`;
 
     document.getElementById("codingPoints").textContent = quarterPlan.coding;
     document.getElementById("studyPoints").textContent = quarterPlan.study;
@@ -184,11 +171,20 @@ document.querySelectorAll(".plusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (pointsLeft > 0 && quarterPlan[category] === 0) {
-            quarterPlan[category] = 1;
-            pointsLeft--;
-            updateAllocationDisplay();
+        if (pointsLeft === 0) {
+            return;
         }
+
+        if (
+            (category === "coding" || category === "study" || category === "social") && quarterPlan[category] >= 1) {
+            document.getElementById("allocationMessage").textContent = "You can only allocate 1 point to Coding, Study, and Social.";
+            return;
+        }
+
+        quarterPlan[category]++;
+        pointsLeft--;
+
+        updateAllocationDisplay();
     });
 });
 
@@ -297,10 +293,9 @@ function finishQuarter() {
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
     saveGame({
-        player: player,
-        gameState: gameState
+        player : player,
+        gameState : gameState
     });
-
 
     if (gameState.endgame === true) {
         window.location.href = "../endgame/EndGame.html";
@@ -308,8 +303,6 @@ function finishQuarter() {
     }
 
     document.getElementById("continueBtn").disabled = false;
-
-
 }
 
 // document
@@ -319,15 +312,38 @@ function finishQuarter() {
 document
     .getElementById("continueBtn")
     .addEventListener("click", () => {
+        if (miniGameQueue.length === 0) {
+            gameState.eventDone = true;
+            gameState.event_done = true;
+            NextQuarter(gameState);
+
+            if (!gameState.endgame) {
+                gameState.currentScreen = "QuarterStart";
+            }
+
+            localStorage.setItem("player", JSON.stringify(player));
+            localStorage.setItem("gameState", JSON.stringify(gameState));
+            localStorage.removeItem("miniGameQueue");
+            localStorage.removeItem("quarterPlan");
+
+            saveGame({
+                player: player,
+                gameState: gameState
+            });
+
+            window.location.href = gameState.endgame
+                ? "../endgame/EndGame.html"
+                : "../mainGame/mainGame.html";
+            return;
+        }
+
         localStorage.setItem(
             "miniGameQueue",
-            JSON.stringify(miniGameQueue)
-        );
+            JSON.stringify(miniGameQueue));
 
         localStorage.setItem(
             "quarterPlan",
-            JSON.stringify(quarterPlan)
-        );
+            JSON.stringify(quarterPlan));
 
         window.location.href = "../Mini-Games/Mini-Games.html";
     });
