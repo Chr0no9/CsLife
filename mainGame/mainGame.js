@@ -72,6 +72,7 @@ function timeAllocation() {
     document.getElementById("allocationModal").style.display = "flex";
 
     pointsLeft = 3;
+    pointsLeft = 3;
 
     quarterPlan.study = 0;
     quarterPlan.coding = 0;
@@ -133,7 +134,8 @@ function applyTimeAllocationEffects() {
 }
 function submitAllocation() {
     if (pointsLeft !== 0) {
-        document.getElementById("allocationMessage").textContent = "You must allocate all 3 points first.";
+        document.getElementById("allocationMessage").textContent =
+            "You must allocate all 3 points first.";
         return;
     }
 
@@ -190,9 +192,10 @@ document.querySelectorAll(".minusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (quarterPlan[category] > 0) {
-            quarterPlan[category]--;
+        if (quarterPlan[category] === 1) {
+            quarterPlan[category] = 0;
             pointsLeft++;
+
             updateAllocationDisplay();
         }
     });
