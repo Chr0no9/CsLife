@@ -1,28 +1,22 @@
-import {
-    studyMiniGames,
-    codingMiniGames,
-    socialMiniGames
-} from "./Mini-Games.js";
-
+import {NextQuarter} from "../Quarter.js";
 import { saveGame } from "../DataStorage.js";
+import {
+    codingMiniGames,
+    socialMiniGames,
+    studyMiniGames
+} from "./Mini-Games.js";
 
 console.log("Mini-Games-Functionality.js loaded");
 
-const player =
-    JSON.parse(localStorage.getItem("player")) || {};
+const player = JSON.parse(localStorage.getItem("player")) || { };
 
-const gameState =
-    JSON.parse(localStorage.getItem("gameState")) || {};
+const gameState = JSON.parse(localStorage.getItem("gameState")) || { };
 
-const savedQueue =
-    JSON.parse(localStorage.getItem("miniGameQueue")) || [];
+const savedQueue = JSON.parse(localStorage.getItem("miniGameQueue")) || [];
 
 const miniGameQueue = savedQueue.filter((gameType) => {
     return (
-        gameType === "coding" ||
-        gameType === "study" ||
-        gameType === "social"
-    );
+        gameType === "coding" || gameType === "study" || gameType === "social");
 });
 
 console.log("Saved queue:", savedQueue);
@@ -35,32 +29,21 @@ let currentStudyGame = null;
 let currentCodingGame = null;
 let currentSocialGame = null;
 
+const categoryDisplay = document.getElementById("miniGameCategory");
 
+const progressDisplay = document.getElementById("gameProgress");
 
-const categoryDisplay =
-    document.getElementById("miniGameCategory");
+const studyGame = document.getElementById("studyGame");
 
-const progressDisplay =
-    document.getElementById("gameProgress");
+const codingGame = document.getElementById("codingGame");
 
-const studyGame =
-    document.getElementById("studyGame");
+const socialGame = document.getElementById("socialGame");
 
-const codingGame =
-    document.getElementById("codingGame");
-
-const socialGame =
-    document.getElementById("socialGame");
-
-const finishedScreen =
-    document.getElementById("finishedScreen");
-
-const queueError =
-    document.getElementById("queueError");
+const finishedScreen = document.getElementById("finishedScreen");
 
 /*
  * ################################ Mini-Game Effects to the stats ##############################
-*/
+ */
 
 function applyEffects(effects) {
     if (!effects) {
@@ -100,26 +83,46 @@ function applyEffects(effects) {
 
 /*
  * ################################ End of Mini-Game Effects to the Stats ##############################
-*/
+ */
 
 function hideAllScreens() {
     studyGame.style.display = "none";
     codingGame.style.display = "none";
     socialGame.style.display = "none";
     finishedScreen.style.display = "none";
-    queueError.style.display = "none";
 }
 
 function updateProgress() {
-    progressDisplay.textContent =
-        `Game ${currentGameIndex + 1} of ${totalGames}`;
+    progressDisplay.textContent = `Game ${currentGameIndex + 1} of ${totalGames}`;
+}
+
+function renderMultipleChoiceGame(game, questionId, choicesId, onSelect) {
+    const question = document.getElementById(questionId);
+    const choicesContainer = document.getElementById(choicesId);
+    const choiceButtons = game.choices.map((choice, choiceIndex) => {
+        const choiceButton = document.createElement("button");
+
+        choiceButton.type = "button";
+        choiceButton.textContent = choice;
+        choiceButton.classList.add("choice-button");
+        choiceButton.addEventListener("click", () => {
+            onSelect(choiceButton, choice, choiceIndex);
+        });
+
+        return choiceButton;
+    });
+
+    // Replace the prompt and choices together so content from the previous
+    // question cannot remain in the container.
+    question.textContent = game.prompt;
+    choicesContainer.replaceChildren(...choiceButtons);
 }
 
 function startCurrentMiniGame() {
     hideAllScreens();
 
     if (totalGames === 0) {
-        showQueueError();
+        progressToNextQuarter();
         return;
     }
 
@@ -130,16 +133,14 @@ function startCurrentMiniGame() {
 
     updateProgress();
 
-    const currentGameType =
-        miniGameQueue[currentGameIndex];
+    const currentGameType = miniGameQueue[currentGameIndex];
 
     console.log(
         "Starting game:",
         currentGameType,
         currentGameIndex + 1,
         "of",
-        totalGames
-    );
+        totalGames);
 
     if (currentGameType === "coding") {
         startCodingGame();
@@ -176,32 +177,16 @@ function startStudyGame() {
     currentStudyGame = studyMiniGames[randomStudyIndex];
 
     document.getElementById("studyTitle").textContent = currentStudyGame.title;
-    document.getElementById("studyQuestion").textContent = currentStudyGame.prompt;
     document.getElementById("studyMessage").textContent = "";
     document.getElementById("nextStudyBtn").style.display = "none";
 
-    const choicesContainer = document.getElementById("studyChoices");
-    choicesContainer.innerHTML = "";
-
-    for (let i = 0; i < currentStudyGame.choices.length; i++) {
-        const choice = currentStudyGame.choices[i];
-        const choiceButton = document.createElement("button");
-        choiceButton.type = "button";
-        choiceButton.textContent = choice;
-
-        choiceButton.classList.add("choice-button");
-
-        function StudyChoices() {
-            checkStudyAnswer(choiceButton, choice);
-        }
-
-        choiceButton.addEventListener("click", StudyChoices);
-
-        choicesContainer.appendChild(choiceButton);
-    }
+    renderMultipleChoiceGame(
+        currentStudyGame,
+        "studyQuestion",
+        "studyChoices",
+        checkStudyAnswer);
 
     studyGame.style.display = "block";
-
 }
 
 /*
@@ -234,7 +219,6 @@ function checkStudyAnswer(selectedButton, selectedAnswer) {
     document.getElementById("nextStudyBtn").style.display = "inline-block"
 }
 
-
 /*
  * ################################### Start Coding Game ###############################3
  */
@@ -255,34 +239,19 @@ function startCodingGame() {
         return;
     }
 
-    // Randomizing the coding mini-games 
+    // Randomizing the coding mini-games
     const randomCodingIndex = Math.floor(Math.random() * codingMiniGames.length);
     currentCodingGame = codingMiniGames[randomCodingIndex];
 
     document.getElementById("codingTitle").textContent = currentCodingGame.title;
-    document.getElementById("codingQuestion").textContent = currentCodingGame.prompt;
     document.getElementById("codingMessage").textContent = "";
     document.getElementById("nextCodingBtn").style.display = "none";
 
-    const choicesContainer = document.getElementById("codingChoices");
-    choicesContainer.innerHTML = "";
-
-    for (let i = 0; i < currentCodingGame.choices.length; i++) {
-        const choice = currentCodingGame.choices[i];
-        const choiceButton = document.createElement("button");
-        choiceButton.type = "button";
-        choiceButton.textContent = choice;
-
-        choiceButton.classList.add("choice-button");
-
-        function CodingChoices() {
-            checkCodingAnswer(choiceButton, choice);
-        }
-
-        choiceButton.addEventListener("click", CodingChoices);
-
-        choicesContainer.appendChild(choiceButton);
-    }
+    renderMultipleChoiceGame(
+        currentCodingGame,
+        "codingQuestion",
+        "codingChoices",
+        checkCodingAnswer);
 
     codingGame.style.display = "block";
 }
@@ -394,8 +363,6 @@ function checkSocialChoice(selectedButton, choiceIndex) {
 ############################### End of Check Social Game  ####################################
 */
 
-
-
 function completeCurrentMiniGame() {
     currentGameIndex++;
 
@@ -405,69 +372,28 @@ function completeCurrentMiniGame() {
 function finishAllMiniGames() {
     hideAllScreens();
 
-    categoryDisplay.textContent =
-        "Quarter Complete";
+    categoryDisplay.textContent = "Quarter Complete";
 
-    progressDisplay.textContent =
-        `${totalGames} of ${totalGames} completed`;
+    progressDisplay.textContent = `${totalGames} of ${totalGames} completed`;
 
-    finishedScreen.style.display =
-        "block";
-}
-
-function showQueueError() {
-    hideAllScreens();
-
-    categoryDisplay.textContent =
-        "No Mini-Games";
-
-    progressDisplay.textContent =
-        "0 games";
-
-    queueError.style.display = "block";
+    finishedScreen.style.display = "block";
 }
 
 function progressToNextQuarter() {
-    const quarterOrder = [
-        "Fall",
-        "Winter",
-        "Spring"
-    ];
-
-    let quarterIndex =
-        quarterOrder.indexOf(
-            gameState.quarter
-        );
-
-    if (quarterIndex === -1) {
-        gameState.quarter = "Fall";
-        gameState.year = gameState.year || 1;
-    } else if (
-        quarterIndex <
-        quarterOrder.length - 1
-    ) {
-        gameState.quarter =
-            quarterOrder[quarterIndex + 1];
-    } else {
-        gameState.quarter = "Fall";
-        gameState.year =
-            (gameState.year || 1) + 1;
-    }
-
-    gameState.currentScreen =
-        "QuarterStart";
-
     gameState.eventDone = true;
+    NextQuarter(gameState);
+
+    if (!gameState.endgame) {
+        gameState.currentScreen = "QuarterStart";
+    }
 
     localStorage.setItem(
         "player",
-        JSON.stringify(player)
-    );
+        JSON.stringify(player));
 
     localStorage.setItem(
         "gameState",
-        JSON.stringify(gameState)
-    );
+        JSON.stringify(gameState));
 
     saveGame({
         player: player,
@@ -475,50 +401,38 @@ function progressToNextQuarter() {
     });
 
     localStorage.removeItem(
-        "miniGameQueue"
-    );
+        "miniGameQueue");
 
     localStorage.removeItem(
-        "quarterPlan"
-    );
+        "quarterPlan");
 
-    window.location.href =
-        "../mainGame/mainGame.html";
+    window.location.href = gameState.endgame
+        ? "../endgame/EndGame.html"
+        : "../mainGame/mainGame.html";
 }
 
 document
     .getElementById("nextStudyBtn")
     .addEventListener(
         "click",
-        completeCurrentMiniGame
-    );
+        completeCurrentMiniGame);
 
 document
     .getElementById("nextCodingBtn")
     .addEventListener(
         "click",
-        completeCurrentMiniGame
-    );
+        completeCurrentMiniGame);
 
 document
     .getElementById("nextSocialBtn")
     .addEventListener(
         "click",
-        completeCurrentMiniGame
-    );
+        completeCurrentMiniGame);
 
 document
     .getElementById("nextQuarterBtn")
     .addEventListener(
         "click",
-        progressToNextQuarter
-    );
-
-document
-    .getElementById("returnToMainBtn")
-    .addEventListener("click", () => {
-        window.location.href =
-            "../mainGame/mainGame.html";
-    });
+        progressToNextQuarter);
 
 startCurrentMiniGame();

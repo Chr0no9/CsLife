@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CS Life - Graduation</title>
+
+    <link
+        rel="stylesheet"
+        href="./EndGame.css"
+    >
+</head>
+
+<body>
+
+    <main class="end-game-container">
+
+        <h1>Congratulations!</h1>
+
+        <p class="graduation-message">
+            You completed all 16 quarters and graduated from college!
+        </p>
+
+        <section class="career-section">
+
+            <p class="career-label">
+                Your career outcome is:
+            </p>
+
+            <h2 id="careerTitle">
+                Loading career...
+            </h2>
+
+            <p id="careerDescription"></p>
+
+        </section>
+
+        <section class="final-stats">
+
+            <h3>Your Final Stats</h3>
+
+            <div class="stat-row">
+                <span>GPA:</span>
+                <span id="finalGpa">0.0</span>
+            </div>
+
+            <div class="stat-row">
+                <span>Intellect:</span>
+                <span id="finalIntellect">0</span>
+            </div>
+
+            <div class="stat-row">
+                <span>Coding:</span>
+                <span id="finalCoding">0</span>
+            </div>
+
+        </section>
+    </main>
+
+    <script
+        type="module"
+        src="./EndGameDisplay.js"
+    ></script>
+
+</body>
+
+</html>

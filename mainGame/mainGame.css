@@ -1,3 +1,5 @@
+/* Page Layout */
+
 body {
     margin: 0;
     min-height: 100vh;
@@ -5,7 +7,7 @@ body {
     font-family: "Times New Roman", serif;
 }
 
-/* Main game panel */
+/* Main Game Panel */
 
 .main-game-container {
     background-color: #EDF6F9;
@@ -39,7 +41,7 @@ body {
     margin-bottom: 12px;
 }
 
-/* Buttons */
+/* Shared Buttons */
 
 button {
     width: 100%;
@@ -62,6 +64,8 @@ button {
 button:hover {
     background-color: #E29578;
 }
+
+/* Player Avatar */
 
 #playerAvatar {
     position: fixed;
@@ -127,7 +131,8 @@ button:hover {
     margin-top: 20px;
 }
 
-/* allocation dialog */
+/* Allocation Dialog */
+
 #allocationModal .dialog-box {
     background-color: #FFDDD2;
 
@@ -238,6 +243,8 @@ button:hover {
     font-weight: bold;
     font-size: 16px;
 }
+
+/* Random Event Dialog */
 
 #eventChoices button {
     margin-top: 12px;
