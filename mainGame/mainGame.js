@@ -270,8 +270,6 @@ function startRandomEvent() {
             document.getElementById("eventModal").style.display = "none";
 
             gameState.eventDone = true;
-            gameState.event_done = true;
-
             finishEvents();
         });
 
@@ -282,7 +280,7 @@ function startRandomEvent() {
 }
 
 function finishEvents() {
-    if (!gameState.eventDone && !gameState.event_done) {
+    if (!gameState.eventDone) {
         return;
     }
 

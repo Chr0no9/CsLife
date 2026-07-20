@@ -4,6 +4,7 @@ import {
     socialMiniGames
 } from "./Mini-Games.js";
 
+import { saveGame } from "../DataStorage.js";
 
 console.log("Mini-Games-Functionality.js loaded");
 
@@ -189,7 +190,7 @@ function startStudyGame() {
         choiceButton.textContent = choice;
 
         choiceButton.classList.add("choice-button");
-       
+
         function StudyChoices() {
             checkStudyAnswer(choiceButton, choice);
         }
@@ -205,7 +206,7 @@ function startStudyGame() {
 
 /*
 ############################### Check Study Game  ####################################
-*/ 
+*/
 function checkStudyAnswer(selectedButton, selectedAnswer) {
     const result = currentStudyGame.AnswerResult(selectedAnswer);
     const choiceButtons = document.querySelectorAll("#studyChoices .choice-button");
@@ -239,7 +240,7 @@ function checkStudyAnswer(selectedButton, selectedAnswer) {
  */
 function startCodingGame() {
     categoryDisplay.textContent = "Coding Mini-Game";
-    
+
     if (codingMiniGames.length === 0) {
         document.getElementById("codingTitle").textContent = "Coding Mini-Game";
 
@@ -273,7 +274,7 @@ function startCodingGame() {
         choiceButton.textContent = choice;
 
         choiceButton.classList.add("choice-button");
-       
+
         function CodingChoices() {
             checkCodingAnswer(choiceButton, choice);
         }
@@ -288,7 +289,7 @@ function startCodingGame() {
 
 /*
 ############################### Check Coding Game  ####################################
-*/ 
+*/
 function checkCodingAnswer(selectedButton, selectedAnswer) {
     const result = currentCodingGame.AnswerResult(selectedAnswer);
     const choiceButtons = document.querySelectorAll("#codingChoices .choice-button");
@@ -356,7 +357,7 @@ function startSocialGame() {
         choiceButton.textContent = choice;
 
         choiceButton.classList.add("choice-button");
-       
+
         function SocialChoices() {
             checkSocialChoice(choiceButton, i);
         }
@@ -371,7 +372,7 @@ function startSocialGame() {
 
 /*
 ############################### Check Social Game  ####################################
-*/ 
+*/
 function checkSocialChoice(selectedButton, choiceIndex) {
     const effects = currentSocialGame.ChoiceEffects(choiceIndex);
     const choiceButtons = document.querySelectorAll("#socialChoices .choice-button");
@@ -385,13 +386,13 @@ function checkSocialChoice(selectedButton, choiceIndex) {
     const socialMessage = document.getElementById("socialMessage");
     socialMessage.textContent = "Choice selected!";
     applyEffects(effects);
-    
+
     document.getElementById("nextSocialBtn").style.display = "inline-block";
 }
 
 /*
 ############################### End of Check Social Game  ####################################
-*/ 
+*/
 
 
 
@@ -456,7 +457,7 @@ function progressToNextQuarter() {
     gameState.currentScreen =
         "QuarterStart";
 
-    gameState.event_done = true;
+    gameState.eventDone = true;
 
     localStorage.setItem(
         "player",
@@ -467,6 +468,11 @@ function progressToNextQuarter() {
         "gameState",
         JSON.stringify(gameState)
     );
+
+    saveGame({
+        player: player,
+        gameState: gameState
+    });
 
     localStorage.removeItem(
         "miniGameQueue"

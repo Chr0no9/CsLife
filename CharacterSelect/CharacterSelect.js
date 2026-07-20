@@ -52,9 +52,6 @@ const gameState = {
     endgame: false
 };
 
-localStorage.setItem("gameState", JSON.stringify(gameState));
-
-
 init();
 
 
