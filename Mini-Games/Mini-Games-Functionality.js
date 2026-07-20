@@ -1,5 +1,5 @@
 import {NextQuarter} from "../Quarter.js";
-
+import { saveGame } from "../DataStorage.js";
 import {
     codingMiniGames,
     socialMiniGames,
@@ -381,7 +381,6 @@ function finishAllMiniGames() {
 
 function progressToNextQuarter() {
     gameState.eventDone = true;
-    gameState.event_done = true;
     NextQuarter(gameState);
 
     if (!gameState.endgame) {
@@ -395,6 +394,11 @@ function progressToNextQuarter() {
     localStorage.setItem(
         "gameState",
         JSON.stringify(gameState));
+
+    saveGame({
+        player: player,
+        gameState: gameState
+    });
 
     localStorage.removeItem(
         "miniGameQueue");
