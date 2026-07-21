@@ -1,6 +1,5 @@
 import {saveGame} from "../DataStorage.js";
-import {applyEventEffects,
-    getRandomEvent} from "../Events.js";
+import {applyEventEffects, getRandomEvent} from "../Events.js";
 import {NextQuarter} from "../Quarter.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
@@ -232,8 +231,6 @@ function startNextMiniGame() {
 
     const nextType = miniGameQueue.shift();
 
-    console.log("Starting mini-game:", nextType);
-
     // Temporary: skip the actual mini-game
     startNextMiniGame();
 }
@@ -303,36 +300,9 @@ function finishQuarter() {
     document.getElementById("continueBtn").disabled = false;
 }
 
-// document
-//     .getElementById("continueBtn")
-//     .addEventListener("click", startQuarter);
-
 document
     .getElementById("continueBtn")
     .addEventListener("click", () => {
-        if (miniGameQueue.length === 0) {
-            gameState.eventDone = true;
-            NextQuarter(gameState);
-
-            if (!gameState.endgame) {
-                gameState.currentScreen = "QuarterStart";
-            }
-
-            localStorage.setItem("player", JSON.stringify(player));
-            localStorage.setItem("gameState", JSON.stringify(gameState));
-            localStorage.removeItem("miniGameQueue");
-            localStorage.removeItem("quarterPlan");
-
-            saveGame({
-                player: player,
-                gameState: gameState
-            });
-
-            window.location.href = gameState.endgame
-                ? "../endgame/EndGame.html"
-                : "../mainGame/mainGame.html";
-            return;
-        }
 
         localStorage.setItem(
             "miniGameQueue",
@@ -341,6 +311,11 @@ document
         localStorage.setItem(
             "quarterPlan",
             JSON.stringify(quarterPlan));
+
+        if (miniGameQueue.length === 0) {
+            window.location.href = "../Events/Events.html";
+            return;
+        }
 
         window.location.href = "../Mini-Games/Mini-Games.html";
     });

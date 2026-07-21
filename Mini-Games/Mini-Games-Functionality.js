@@ -1,16 +1,6 @@
-import {NextQuarter} from "../Quarter.js";
-import { saveGame } from "../DataStorage.js";
-import {
-    codingMiniGames,
-    socialMiniGames,
-    studyMiniGames
-} from "./Mini-Games.js";
-
-console.log("Mini-Games-Functionality.js loaded");
+import {codingMiniGames, socialMiniGames, studyMiniGames} from "./Mini-Games.js";
 
 const player = JSON.parse(localStorage.getItem("player")) || { };
-
-const gameState = JSON.parse(localStorage.getItem("gameState")) || { };
 
 const savedQueue = JSON.parse(localStorage.getItem("miniGameQueue")) || [];
 
@@ -19,8 +9,6 @@ const miniGameQueue = savedQueue.filter((gameType) => {
         gameType === "coding" || gameType === "study" || gameType === "social");
 });
 
-console.log("Saved queue:", savedQueue);
-console.log("Filtered mini-game queue:", miniGameQueue);
 
 const totalGames = miniGameQueue.length;
 
@@ -38,8 +26,6 @@ const studyGame = document.getElementById("studyGame");
 const codingGame = document.getElementById("codingGame");
 
 const socialGame = document.getElementById("socialGame");
-
-const finishedScreen = document.getElementById("finishedScreen");
 
 /*
  * ################################ Mini-Game Effects to the stats ##############################
@@ -89,7 +75,6 @@ function hideAllScreens() {
     studyGame.style.display = "none";
     codingGame.style.display = "none";
     socialGame.style.display = "none";
-    finishedScreen.style.display = "none";
 }
 
 function updateProgress() {
@@ -122,7 +107,7 @@ function startCurrentMiniGame() {
     hideAllScreens();
 
     if (totalGames === 0) {
-        progressToNextQuarter();
+        window.location.href = "../Events/Events.html";
         return;
     }
 
@@ -370,45 +355,7 @@ function completeCurrentMiniGame() {
 }
 
 function finishAllMiniGames() {
-    hideAllScreens();
-
-    categoryDisplay.textContent = "Quarter Complete";
-
-    progressDisplay.textContent = `${totalGames} of ${totalGames} completed`;
-
-    finishedScreen.style.display = "block";
-}
-
-function progressToNextQuarter() {
-    gameState.eventDone = true;
-    NextQuarter(gameState);
-
-    if (!gameState.endgame) {
-        gameState.currentScreen = "QuarterStart";
-    }
-
-    localStorage.setItem(
-        "player",
-        JSON.stringify(player));
-
-    localStorage.setItem(
-        "gameState",
-        JSON.stringify(gameState));
-
-    saveGame({
-        player: player,
-        gameState: gameState
-    });
-
-    localStorage.removeItem(
-        "miniGameQueue");
-
-    localStorage.removeItem(
-        "quarterPlan");
-
-    window.location.href = gameState.endgame
-        ? "../endgame/EndGame.html"
-        : "../mainGame/mainGame.html";
+    window.location.href = "../Events/Events.html";
 }
 
 document
@@ -428,11 +375,5 @@ document
     .addEventListener(
         "click",
         completeCurrentMiniGame);
-
-document
-    .getElementById("nextQuarterBtn")
-    .addEventListener(
-        "click",
-        progressToNextQuarter);
 
 startCurrentMiniGame();
