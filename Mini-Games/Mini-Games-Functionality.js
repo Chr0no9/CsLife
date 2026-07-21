@@ -380,12 +380,9 @@ function finishAllMiniGames() {
 }
 
 function progressToNextQuarter() {
-    gameState.eventDone = true;
-    NextQuarter(gameState);
-
-    if (!gameState.endgame) {
-        gameState.currentScreen = "QuarterStart";
-    }
+    gameState.miniGameDone = true;
+    gameState.eventDone = false;
+    gameState.currentScreen = "Event";
 
     localStorage.setItem(
         "player",

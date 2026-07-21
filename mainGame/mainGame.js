@@ -1,7 +1,9 @@
-import {saveGame} from "../DataStorage.js";
-import {applyEventEffects,
-    getRandomEvent} from "../Events.js";
-import {NextQuarter} from "../Quarter.js";
+import { saveGame } from "../DataStorage.js";
+import {
+    applyEventEffects,
+    getEventForQuarter
+} from "../Events.js";
+import { NextQuarter } from "../Quarter.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 
@@ -58,11 +60,11 @@ function startQuarter() {
 }
 
 const quarterPlan = {
-    study : 0,
-    coding : 0,
-    social : 0,
-    work : 0,
-    rest : 0
+    study: 0,
+    coding: 0,
+    social: 0,
+    work: 0,
+    rest: 0
 };
 let pointsLeft = 3;
 let miniGameQueue = [];
@@ -244,9 +246,38 @@ function finishMiniGames() {
 
     startRandomEvent();
 }
+function formatEventEffects(effects) {
+    const statLabels = {
+        money: "Money",
+        happiness: "Happiness",
+        social: "Social",
+        intellect: "Intellect",
+        coding: "Coding",
+        health: "Health",
+        career: "Career",
+        gpa: "GPA",
+        relationshipStatus: "Relationship"
+    };
+
+    return Object.entries(effects).map(([stat, value]) => {
+        const label = statLabels[stat] || stat;
+
+        if (typeof value === "number") {
+            const sign = value > 0 ? "+" : "";
+            return `${label}: ${sign}${value}`;
+        }
+
+        return `${label}: ${value}`;
+    });
+}
 
 function startRandomEvent() {
-    const randomEvent = getRandomEvent();
+    const randomEvent = getEventForQuarter(gameState);
+    if (randomEvent === null) {
+        gameState.eventDone = true;
+        finishEvents();
+        return;
+    }
 
     gameState.currentEvent = randomEvent.id;
 
@@ -257,11 +288,33 @@ function startRandomEvent() {
     eventChoices.innerHTML = "";
 
     randomEvent.choices.forEach((choice) => {
+        const choiceContainer = document.createElement("div");
+        choiceContainer.classList.add("event-choice-container");
         const choiceButton = document.createElement("button");
         choiceButton.textContent = choice.text;
+        choiceButton.classList.add("event-choice-button");
+
+        const effectsDisplay = document.createElement("div");
+        effectsDisplay.classList.add("event-choice-effects");
+
+        const formattedEffects = formatEventEffects(choice.effects);
+
+        formattedEffects.forEach((effectText) => {
+            const effectLine = document.createElement("span");
+            effectLine.textContent = effectText;
+            effectsDisplay.appendChild(effectLine);
+        });
 
         choiceButton.addEventListener("click", () => {
             applyEventEffects(player, choice.effects);
+
+            if (!Array.isArray(gameState.seenEvents)) {
+                gameState.seenEvents = [];
+            }
+
+            if (!gameState.seenEvents.includes(randomEvent.id)) {
+                gameState.seenEvents.push(randomEvent.id);
+            }
 
             document.getElementById("eventModal").style.display = "none";
 
@@ -269,7 +322,9 @@ function startRandomEvent() {
             finishEvents();
         });
 
-        eventChoices.appendChild(choiceButton);
+        choiceContainer.appendChild(choiceButton);
+        choiceContainer.appendChild(effectsDisplay);
+        eventChoices.appendChild(choiceContainer);
     });
 
     document.getElementById("eventModal").style.display = "flex";
@@ -291,8 +346,8 @@ function finishQuarter() {
     localStorage.setItem("gameState", JSON.stringify(gameState));
 
     saveGame({
-        player : player,
-        gameState : gameState
+        player: player,
+        gameState: gameState
     });
 
     if (gameState.endgame === true) {
@@ -344,3 +399,14 @@ document
 
         window.location.href = "../Mini-Games/Mini-Games.html";
     });
+
+if (
+    gameState.currentScreen === "Event" &&
+    gameState.miniGameDone === true &&
+    gameState.eventDone === false
+) {
+    document.getElementById("allocationModal").style.display = "none";
+    document.getElementById("continueBtn").style.display = "none";
+
+    startRandomEvent();
+}
