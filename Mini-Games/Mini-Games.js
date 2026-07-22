@@ -4,8 +4,6 @@
 // Studying
 // Getting a Job
 
-// import { hasSaveData } from "./DataStorage";
-
 /* Time Allocation determines how many mini-games appears
 They lose minus coding stats if they get it incorrectly --> Potentially adding a penalty
 for skipping a mini-game (give an option to skip it <-- Later implementation)

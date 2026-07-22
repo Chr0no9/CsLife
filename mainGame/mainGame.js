@@ -1,9 +1,3 @@
-import { saveGame } from "../DataStorage.js";
-import {
-    applyEventEffects,
-    getEventForQuarter
-} from "../Events.js";
-import { NextQuarter } from "../Quarter.js";
 
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 
@@ -12,6 +6,7 @@ const statsDialog = document.getElementById("statsDialog");
 
 const playerAvatar = document.getElementById("playerAvatar");
 
+// Displays the avatar selected during character creation when one is available.
 if (player.avatar) {
     playerAvatar.src = player.avatar;
 }
@@ -20,6 +15,7 @@ document.getElementById("nameDisplay").textContent = `Name: ${player.name}`;
 
 document.getElementById("quarterDisplay").textContent = `Year: ${gameState.year} - ${gameState.quarter}`;
 
+// Fills the statistics dialog with current player data and opens it.
 document.getElementById("viewStatsBtn").addEventListener("click", () => {
     document.getElementById("statName").textContent = `Name: ${player.name}`;
     document.getElementById("statTrait").textContent = `Trait: ${player.trait}`;
@@ -35,29 +31,10 @@ document.getElementById("viewStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "flex";
 });
 
+// Closes the player statistics dialog.
 document.getElementById("closeStatsBtn").addEventListener("click", () => {
     statsDialog.style.display = "none";
 });
-
-function updateStats() {
-    document.getElementById("nameDisplay").textContent = `Name: ${player.name}`;
-
-    document.getElementById("quarterDisplay").textContent = `Year: ${gameState.year} - ${gameState.quarter}`;
-}
-
-// Main game loop functions
-
-function startQuarter() {
-    const continueButton = document.getElementById("continueBtn");
-    continueButton.disabled = true;
-
-    updateStats();
-
-    gameState.currentEvent = null;
-    gameState.currentMiniGame = null;
-    gameState.miniGameDone = false;
-    gameState.eventDone = false;
-}
 
 const quarterPlan = {
     study: 0,
@@ -69,11 +46,11 @@ const quarterPlan = {
 let pointsLeft = 3;
 let miniGameQueue = [];
 
+// Opens the allocation modal and resets the quarter plan to three available points.
 function timeAllocation() {
-    // start with 5 points to chose what to do with your time
+    // Start with 3 points to choose how to spend the quarter.
     document.getElementById("allocationModal").style.display = "flex";
 
-    pointsLeft = 3;
     pointsLeft = 3;
 
     quarterPlan.study = 0;
@@ -85,12 +62,14 @@ function timeAllocation() {
     updateAllocationDisplay();
 }
 
+// Opens the allocation modal when the Allocate Points button is clicked.
 document
     .getElementById("allocatePointsBtn")
     .addEventListener("click", timeAllocation);
 
 const allocationModal = document.getElementById("allocationModal");
 
+// Closes the allocation modal when the player clicks its outside background.
 allocationModal.addEventListener("click", (event) => {
     if (event.target === allocationModal) {
         allocationModal.style.display = "none";
@@ -103,6 +82,7 @@ const HAPPINESSLOSS_PER_WORK_POINT = 3;
 const HEALTH_PER_REST_POINT = 5;
 const HAPPINESS_PER_REST_POINT = 4;
 
+// Applies the Work and Rest point effects while keeping health and happiness in range.
 function applyTimeAllocationEffects() {
     const moneyEarned = quarterPlan.work * MONEY_PER_WORK_POINT;
 
@@ -134,6 +114,8 @@ function applyTimeAllocationEffects() {
         player.happiness = 0;
     }
 }
+
+// Validates, applies, and saves the completed quarter allocation.
 function submitAllocation() {
     if (pointsLeft !== 0) {
         document.getElementById("allocationMessage").textContent =
@@ -157,6 +139,7 @@ function submitAllocation() {
         JSON.stringify(miniGameQueue));
 }
 
+// Refreshes the displayed allocation totals and clears the previous message.
 function updateAllocationDisplay() {
     document.getElementById("pointsLeftDisplay").textContent = `Points to allocate: ${pointsLeft}`;
 
@@ -169,6 +152,7 @@ function updateAllocationDisplay() {
     document.getElementById("allocationMessage").textContent = "";
 }
 
+// Adds a point to the category associated with the clicked plus button.
 document.querySelectorAll(".plusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
@@ -190,6 +174,7 @@ document.querySelectorAll(".plusBtn").forEach((button) => {
     });
 });
 
+// Removes a point from the category associated with the clicked minus button.
 document.querySelectorAll(".minusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
@@ -203,10 +188,12 @@ document.querySelectorAll(".minusBtn").forEach((button) => {
     });
 });
 
+// Submits the allocation when the Start Quarter button is clicked.
 document
     .getElementById("confirmAllocationBtn")
     .addEventListener("click", submitAllocation);
 
+// Builds the ordered mini-game queue from Coding, Study, and Social points.
 function constructMiniGameQueue() {
     miniGameQueue = [];
 
@@ -221,192 +208,15 @@ function constructMiniGameQueue() {
     for (let i = 0; i < quarterPlan.social; i++) {
         miniGameQueue.push("social");
     }
-
-    console.log("Created mini-game queue:", miniGameQueue);
 }
-
-function startNextMiniGame() {
-    if (miniGameQueue.length === 0) {
-        gameState.miniGameDone = true;
-        finishMiniGames();
-        return;
-    }
-
-    const nextType = miniGameQueue.shift();
-
-    console.log("Starting mini-game:", nextType);
-
-    // Temporary: skip the actual mini-game
-    startNextMiniGame();
-}
-function finishMiniGames() {
-    if (!gameState.miniGameDone) {
-        return;
-    }
-
-    startRandomEvent();
-}
-function formatEventEffects(effects) {
-    const statLabels = {
-        money: "Money",
-        happiness: "Happiness",
-        social: "Social",
-        intellect: "Intellect",
-        coding: "Coding",
-        health: "Health",
-        career: "Career",
-        gpa: "GPA",
-        relationshipStatus: "Relationship"
-    };
-
-    return Object.entries(effects).map(([stat, value]) => {
-        const label = statLabels[stat] || stat;
-
-        if (typeof value === "number") {
-            const sign = value > 0 ? "+" : "";
-            return `${label}: ${sign}${value}`;
-        }
-
-        return `${label}: ${value}`;
-    });
-}
-
-function startRandomEvent() {
-    const randomEvent = getEventForQuarter(gameState);
-    if (randomEvent === null) {
-        gameState.eventDone = true;
-        finishEvents();
-        return;
-    }
-
-    gameState.currentEvent = randomEvent.id;
-
-    document.getElementById("eventTitle").textContent = randomEvent.title;
-    document.getElementById("eventDescription").textContent = randomEvent.description;
-
-    const eventChoices = document.getElementById("eventChoices");
-    eventChoices.innerHTML = "";
-
-    randomEvent.choices.forEach((choice) => {
-        const choiceContainer = document.createElement("div");
-        choiceContainer.classList.add("event-choice-container");
-        const choiceButton = document.createElement("button");
-        choiceButton.textContent = choice.text;
-        choiceButton.classList.add("event-choice-button");
-
-        const effectsDisplay = document.createElement("div");
-        effectsDisplay.classList.add("event-choice-effects");
-
-        const formattedEffects = formatEventEffects(choice.effects);
-
-        formattedEffects.forEach((effectText) => {
-            const effectLine = document.createElement("span");
-            effectLine.textContent = effectText;
-            effectsDisplay.appendChild(effectLine);
-        });
-
-        choiceButton.addEventListener("click", () => {
-            applyEventEffects(player, choice.effects);
-
-            if (!Array.isArray(gameState.seenEvents)) {
-                gameState.seenEvents = [];
-            }
-
-            if (!gameState.seenEvents.includes(randomEvent.id)) {
-                gameState.seenEvents.push(randomEvent.id);
-            }
-
-            document.getElementById("eventModal").style.display = "none";
-
-            gameState.eventDone = true;
-            finishEvents();
-        });
-
-        choiceContainer.appendChild(choiceButton);
-        choiceContainer.appendChild(effectsDisplay);
-        eventChoices.appendChild(choiceContainer);
-    });
-
-    document.getElementById("eventModal").style.display = "flex";
-}
-
-function finishEvents() {
-    if (!gameState.eventDone) {
-        return;
-    }
-
-    finishQuarter();
-}
-
-function finishQuarter() {
-
-    NextQuarter(gameState);
-    updateStats();
-    localStorage.setItem("player", JSON.stringify(player));
-    localStorage.setItem("gameState", JSON.stringify(gameState));
-
-    saveGame({
-        player: player,
-        gameState: gameState
-    });
-
-    if (gameState.endgame === true) {
-        window.location.href = "../endgame/EndGame.html";
-        return;
-    }
-
-    document.getElementById("continueBtn").disabled = false;
-}
-
-// document
-//     .getElementById("continueBtn")
-//     .addEventListener("click", startQuarter);
 
 document
     .getElementById("continueBtn")
     .addEventListener("click", () => {
         if (miniGameQueue.length === 0) {
-            gameState.eventDone = true;
-            NextQuarter(gameState);
-
-            if (!gameState.endgame) {
-                gameState.currentScreen = "QuarterStart";
-            }
-
-            localStorage.setItem("player", JSON.stringify(player));
-            localStorage.setItem("gameState", JSON.stringify(gameState));
-            localStorage.removeItem("miniGameQueue");
-            localStorage.removeItem("quarterPlan");
-
-            saveGame({
-                player: player,
-                gameState: gameState
-            });
-
-            window.location.href = gameState.endgame
-                ? "../endgame/EndGame.html"
-                : "../mainGame/mainGame.html";
+            window.location.href = "../Events/Events.html";
             return;
         }
 
-        localStorage.setItem(
-            "miniGameQueue",
-            JSON.stringify(miniGameQueue));
-
-        localStorage.setItem(
-            "quarterPlan",
-            JSON.stringify(quarterPlan));
-
         window.location.href = "../Mini-Games/Mini-Games.html";
     });
-
-if (
-    gameState.currentScreen === "Event" &&
-    gameState.miniGameDone === true &&
-    gameState.eventDone === false
-) {
-    document.getElementById("allocationModal").style.display = "none";
-    document.getElementById("continueBtn").style.display = "none";
-
-    startRandomEvent();
-}

@@ -5,10 +5,12 @@ const newGameBtn = document.querySelector(".newGameBtn");
 const continueBtn = document.querySelector(".continueBtn");
 const saveMessage = document.getElementById("saveMessage");
 
+// Opens character selection when the player starts a new game.
 newGameBtn.addEventListener("click", () => {
     window.location.href = "../CharacterSelect/CharacterSelect.html";
 });
 
+// Loads an existing save or displays a message when no save is available.
 continueBtn.addEventListener("click", () => {
     saveMessage.textContent = "";
 

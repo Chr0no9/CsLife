@@ -45,14 +45,34 @@ export function NextQuarter(gameState) {
     if (gameState.eventDone === false) {
         return;
     }
+    
+    /*
+     * Note: this how I was checking if the quarter was at the end however I realized 
+     * that it's not actually going to the graduation screen when its YEAR 4 AND Spring
+     * The problem it was I was checking IF it was the last quarter of the year and not the spring condition
+    */ 
+
+    // if (LastQuarter(gameState.quarter)) {
+    //     if (gameState.year === LastYear) {
+    //         gameState.endgame = true;
+    //         gameState.currentScreen = "EndGame";
+    //         return;
+    //     }
+
+    //     NextYear(gameState);
+    //     gameState.quarter = "Fall";
+    //     return;
+    // }
+
+
+
+    if (gameState.year === LastYear && gameState.quarter === "Spring") {
+        gameState.endgame = true;
+        gameState.currentScreen = "EndGame";
+        return;
+    }
 
     if (LastQuarter(gameState.quarter)) {
-        if (gameState.year === LastYear) {
-            gameState.endgame = true;
-            gameState.currentScreen = "EndGame";
-            return;
-        }
-
         NextYear(gameState);
         gameState.quarter = "Fall";
         return;

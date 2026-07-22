@@ -48,12 +48,13 @@ export const careers = [
     }
 ]
 
-    export function endCareers(player) {
-        for (const career of careers) {
-            if (player.gpa >= career.req_GPA && player.intellect >= career.req_Int && player.coding >= career.req_Cod) {
-                return career;
-            }
+// Returns the highest career whose GPA, intellect, and coding requirements the player meets.
+export function endCareers(player) {
+    for (const career of careers) {
+        if (player.gpa >= career.req_GPA && player.intellect >= career.req_Int && player.coding >= career.req_Cod) {
+            return career;
         }
-
-        return careers[careers.length - 1];
     }
+
+    return careers[careers.length - 1];
+}
