@@ -179,8 +179,8 @@ document.querySelectorAll(".minusBtn").forEach((button) => {
     button.addEventListener("click", () => {
         const category = button.dataset.category;
 
-        if (quarterPlan[category] === 1) {
-            quarterPlan[category] = 0;
+        if (quarterPlan[category] > 0) {
+            quarterPlan[category]--;
             pointsLeft++;
 
             updateAllocationDisplay();
