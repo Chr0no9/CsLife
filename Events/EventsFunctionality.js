@@ -1,16 +1,28 @@
+// Imports the functions used to select an event and apply its stat changes.
 import {
     getEventForQuarter,
     applyEventEffects
-} from "../Events.js";import { NextQuarter } from "../Quarter.js";
+} from "../Events.js";
+
+// Imports the function that advances the game to the next quarter.
+import { NextQuarter } from "../Quarter.js";
+
+// Imports the function that saves the complete game data.
 import { saveGame } from "../DataStorage.js";
 
+// Loads the saved player and game-state objects from local storage.
 const player = JSON.parse(localStorage.getItem("player"));
 const gameState = JSON.parse(localStorage.getItem("gameState"));
-const event = getEventForQuarter(gameState);const choices = document.getElementById("choiceContainer");
-const continueBtn = document.getElementById("continueBtn");
-const continueEffects =
-    document.getElementById("continueEffects");
 
+// Selects the event that should appear during the current quarter.
+const event = getEventForQuarter(gameState);
+
+// Gets the HTML elements used to display choices, effects, and the Continue button.
+const choices = document.getElementById("choiceContainer");
+const continueBtn = document.getElementById("continueBtn");
+const continueEffects = document.getElementById("continueEffects");
+
+// Converts an effect's property name and value into readable text.
 function formatEffect(stat, value) {
     const statLabels = {
         money: "Money",
@@ -34,9 +46,11 @@ function formatEffect(stat, value) {
     return `${label}: ${value}`;
 }
 
+// Creates and displays a label for each stat effect in a container.
 function displayEffects(container, effects) {
     container.innerHTML = "";
 
+    // Loops through every stat effect and adds it to the page.
     Object.entries(effects).forEach(([stat, value]) => {
         const effectItem = document.createElement("span");
 
@@ -47,6 +61,7 @@ function displayEffects(container, effects) {
     });
 }
 
+// Adds the current event to the list of events the player has already seen.
 function recordEventAsSeen() {
     if (!Array.isArray(gameState.seenEvents)) {
         gameState.seenEvents = [];
@@ -57,6 +72,7 @@ function recordEventAsSeen() {
     }
 }
 
+// Saves the updated player and game state in both storage formats.
 function saveCurrentState() {
     localStorage.setItem(
         "player",
@@ -74,6 +90,7 @@ function saveCurrentState() {
     });
 }
 
+// Completes the event, advances the quarter, and opens the next screen.
 function finishEventAndAdvanceQuarter() {
     gameState.eventDone = true;
 
@@ -86,9 +103,11 @@ function finishEventAndAdvanceQuarter() {
         : "../mainGame/mainGame.html";
 }
 
+// Skips directly to the next quarter when no unused event is available.
 if (event === null) {
     finishEventAndAdvanceQuarter();
 } else {
+    // Stores and displays the event selected for the current quarter.
     gameState.currentEvent = event.id;
 
     document.getElementById("eventTitle").textContent =
@@ -97,10 +116,7 @@ if (event === null) {
     document.getElementById("eventDescription").textContent =
         event.description;
 
-    /*
-     * A one-option event is not a real decision.
-     * Its single option becomes the page's Continue button.
-     */
+    // Uses the Continue button as the only option when the event has one choice.
     if (event.choices.length === 1) {
         const onlyChoice = event.choices[0];
 
@@ -112,6 +128,7 @@ if (event === null) {
             onlyChoice.effects
         );
 
+        // Applies the only choice and advances when its button is clicked.
         continueBtn.onclick = () => {
             applyEventEffects(
                 player,
@@ -122,10 +139,7 @@ if (event === null) {
             finishEventAndAdvanceQuarter();
         };
     } else {
-        /*
-         * Multi-choice events display every option and
-         * its effects before the player chooses.
-         */
+        // Creates a button and effect preview for every available choice.
         event.choices.forEach((choice) => {
             const choiceWrapper =
                 document.createElement("div");
@@ -149,6 +163,7 @@ if (event === null) {
                 choice.effects
             );
 
+            // Applies and saves the selected choice when its button is clicked.
             button.onclick = () => {
                 applyEventEffects(
                     player,
@@ -158,6 +173,7 @@ if (event === null) {
                 recordEventAsSeen();
                 saveCurrentState();
 
+                // Disables every choice button to prevent choosing more than once.
                 document
                     .querySelectorAll(".choiceButton")
                     .forEach((choiceButton) => {
@@ -183,6 +199,7 @@ if (event === null) {
             choices.appendChild(choiceWrapper);
         });
 
+        // Advances the quarter when Continue is clicked after making a choice.
         continueBtn.onclick =
             finishEventAndAdvanceQuarter;
     }
