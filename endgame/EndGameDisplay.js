@@ -1,7 +1,9 @@
 import {endCareers} from "./EndGame.js";
 
+// Loads the completed player data saved by the game.
 const player = JSON.parse(localStorage.getItem("player"));
 
+// Selects and displays the player's career result and final statistics.
 if (player) {
     const career = endCareers(player);
 

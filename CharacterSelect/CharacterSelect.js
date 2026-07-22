@@ -1,15 +1,18 @@
 import {createPlayer} from "../Character.js";
-import {NextQuarter} from "../Quarter.js";
-let selectedAvatar = "";
 import {saveGame} from "../DataStorage.js";
 
+let selectedAvatar = "";
+
+// Connects the Start Game button and avatar images to their click behavior.
 function init() {
     const startButton = document.getElementById("startGameBtn");
 
+    // Starts the game using the completed character form.
     startButton.addEventListener("click", startGame);
 
     const avatars = document.querySelectorAll(".avatar-option");
 
+    // Updates the selected styling and saves the clicked avatar path.
     avatars.forEach((avatar) => {
         avatar.addEventListener("click", () => {
             avatars.forEach((a) => a.classList.remove("selected"));
@@ -20,6 +23,7 @@ function init() {
     });
 }
 
+// Creates and saves a new player before opening the main game page.
 function startGame() {
     const name = document.getElementById("playerName").value;
     const traitName = document.getElementById("traitSelect").value;
@@ -27,8 +31,6 @@ function startGame() {
     const player = createPlayer(name, traitName);
 
     player.avatar = selectedAvatar;
-
-    gameState.currentScreen = "QuarterStart";
 
     localStorage.setItem("player", JSON.stringify(player));
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -52,4 +54,5 @@ const gameState = {
     endgame : false
 };
 
+// Initializes the character-selection controls after the page loads.
 init();

@@ -1,16 +1,6 @@
-import {NextQuarter} from "../Quarter.js";
-import { saveGame } from "../DataStorage.js";
-import {
-    codingMiniGames,
-    socialMiniGames,
-    studyMiniGames
-} from "./Mini-Games.js";
-
-console.log("Mini-Games-Functionality.js loaded");
+import {codingMiniGames, socialMiniGames, studyMiniGames} from "./Mini-Games.js";
 
 const player = JSON.parse(localStorage.getItem("player")) || { };
-
-const gameState = JSON.parse(localStorage.getItem("gameState")) || { };
 
 const savedQueue = JSON.parse(localStorage.getItem("miniGameQueue")) || [];
 
@@ -19,8 +9,6 @@ const miniGameQueue = savedQueue.filter((gameType) => {
         gameType === "coding" || gameType === "study" || gameType === "social");
 });
 
-console.log("Saved queue:", savedQueue);
-console.log("Filtered mini-game queue:", miniGameQueue);
 
 const totalGames = miniGameQueue.length;
 
@@ -39,12 +27,11 @@ const codingGame = document.getElementById("codingGame");
 
 const socialGame = document.getElementById("socialGame");
 
-const finishedScreen = document.getElementById("finishedScreen");
-
 /*
  * ################################ Mini-Game Effects to the stats ##############################
  */
 
+// Applies a mini-game's stat effects and saves the updated player.
 function applyEffects(effects) {
     if (!effects) {
         return;
@@ -85,17 +72,19 @@ function applyEffects(effects) {
  * ################################ End of Mini-Game Effects to the Stats ##############################
  */
 
+// Hides every category section so only the current mini-game is visible.
 function hideAllScreens() {
     studyGame.style.display = "none";
     codingGame.style.display = "none";
     socialGame.style.display = "none";
-    finishedScreen.style.display = "none";
 }
 
+// Displays the current mini-game number and the total number queued.
 function updateProgress() {
     progressDisplay.textContent = `Game ${currentGameIndex + 1} of ${totalGames}`;
 }
 
+// Renders a question and creates a clickable button for each answer choice.
 function renderMultipleChoiceGame(game, questionId, choicesId, onSelect) {
     const question = document.getElementById(questionId);
     const choicesContainer = document.getElementById(choicesId);
@@ -105,6 +94,8 @@ function renderMultipleChoiceGame(game, questionId, choicesId, onSelect) {
         choiceButton.type = "button";
         choiceButton.textContent = choice;
         choiceButton.classList.add("choice-button");
+
+        // Passes the clicked button, answer text, and choice index to the category handler.
         choiceButton.addEventListener("click", () => {
             onSelect(choiceButton, choice, choiceIndex);
         });
@@ -118,11 +109,12 @@ function renderMultipleChoiceGame(game, questionId, choicesId, onSelect) {
     choicesContainer.replaceChildren(...choiceButtons);
 }
 
+// Starts the queued category or opens Events after all mini-games are complete.
 function startCurrentMiniGame() {
     hideAllScreens();
 
     if (totalGames === 0) {
-        progressToNextQuarter();
+        window.location.href = "../Events/Events.html";
         return;
     }
 
@@ -156,6 +148,7 @@ function startCurrentMiniGame() {
  * ################################### Start Study Game ###############################3
  */
 
+// Selects and displays a random Study mini-game.
 function startStudyGame() {
     categoryDisplay.textContent = "Study Mini-Game";
     if (studyMiniGames.length === 0) {
@@ -192,6 +185,7 @@ function startStudyGame() {
 /*
 ############################### Check Study Game  ####################################
 */
+// Checks a Study answer, shows feedback, and applies its stat effects.
 function checkStudyAnswer(selectedButton, selectedAnswer) {
     const result = currentStudyGame.AnswerResult(selectedAnswer);
     const choiceButtons = document.querySelectorAll("#studyChoices .choice-button");
@@ -222,6 +216,7 @@ function checkStudyAnswer(selectedButton, selectedAnswer) {
 /*
  * ################################### Start Coding Game ###############################3
  */
+// Selects and displays a random Coding mini-game.
 function startCodingGame() {
     categoryDisplay.textContent = "Coding Mini-Game";
 
@@ -259,6 +254,7 @@ function startCodingGame() {
 /*
 ############################### Check Coding Game  ####################################
 */
+// Checks a Coding answer, shows feedback, and applies its stat effects.
 function checkCodingAnswer(selectedButton, selectedAnswer) {
     const result = currentCodingGame.AnswerResult(selectedAnswer);
     const choiceButtons = document.querySelectorAll("#codingChoices .choice-button");
@@ -290,6 +286,7 @@ function checkCodingAnswer(selectedButton, selectedAnswer) {
  * ################################### Start Social Game ###############################3
  */
 
+// Selects and displays a random Social mini-game.
 function startSocialGame() {
     categoryDisplay.textContent = "Social Mini-Game";
 
@@ -327,6 +324,7 @@ function startSocialGame() {
 
         choiceButton.classList.add("choice-button");
 
+        // Sends the clicked Social choice and its index to the choice handler.
         function SocialChoices() {
             checkSocialChoice(choiceButton, i);
         }
@@ -342,6 +340,7 @@ function startSocialGame() {
 /*
 ############################### Check Social Game  ####################################
 */
+// Applies the selected Social choice's effects and reveals its Continue button.
 function checkSocialChoice(selectedButton, choiceIndex) {
     const effects = currentSocialGame.ChoiceEffects(choiceIndex);
     const choiceButtons = document.querySelectorAll("#socialChoices .choice-button");
@@ -363,76 +362,38 @@ function checkSocialChoice(selectedButton, choiceIndex) {
 ############################### End of Check Social Game  ####################################
 */
 
+// Advances the queue index and starts the next mini-game.
 function completeCurrentMiniGame() {
     currentGameIndex++;
 
     startCurrentMiniGame();
 }
 
+// Opens the Events page after the complete mini-game queue has been played.
 function finishAllMiniGames() {
-    hideAllScreens();
-
-    categoryDisplay.textContent = "Quarter Complete";
-
-    progressDisplay.textContent = `${totalGames} of ${totalGames} completed`;
-
-    finishedScreen.style.display = "block";
+    window.location.href = "../Events/Events.html";
 }
 
-function progressToNextQuarter() {
-    gameState.eventDone = true;
-    NextQuarter(gameState);
-
-    if (!gameState.endgame) {
-        gameState.currentScreen = "QuarterStart";
-    }
-
-    localStorage.setItem(
-        "player",
-        JSON.stringify(player));
-
-    localStorage.setItem(
-        "gameState",
-        JSON.stringify(gameState));
-
-    saveGame({
-        player: player,
-        gameState: gameState
-    });
-
-    localStorage.removeItem(
-        "miniGameQueue");
-
-    localStorage.removeItem(
-        "quarterPlan");
-
-    window.location.href = gameState.endgame
-        ? "../endgame/EndGame.html"
-        : "../mainGame/mainGame.html";
-}
-
+// Advances after the player finishes a Study mini-game.
 document
     .getElementById("nextStudyBtn")
     .addEventListener(
         "click",
         completeCurrentMiniGame);
 
+// Advances after the player finishes a Coding mini-game.
 document
     .getElementById("nextCodingBtn")
     .addEventListener(
         "click",
         completeCurrentMiniGame);
 
+// Advances after the player finishes a Social mini-game.
 document
     .getElementById("nextSocialBtn")
     .addEventListener(
         "click",
         completeCurrentMiniGame);
 
-document
-    .getElementById("nextQuarterBtn")
-    .addEventListener(
-        "click",
-        progressToNextQuarter);
-
+// Starts the first queued mini-game when the page script loads.
 startCurrentMiniGame();

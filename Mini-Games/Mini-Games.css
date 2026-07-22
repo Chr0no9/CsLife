@@ -204,33 +204,9 @@ button:hover {
 
 #nextStudyBtn,
 #nextCodingBtn,
-#nextSocialBtn,
-#nextQuarterBtn {
+#nextSocialBtn {
     align-self: center;
     margin-top: 10px;
     min-width: 200px;
     padding: 10px 18px;
-}
-
-/* Finished Screen */
-
-#finishedScreen {
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#finishedScreen h2 {
-    color: #006D77;
-
-    font-size: 40px;
-}
-
-#finishedScreen p {
-    color: #006D77;
-
-    font-size: 20px;
 }
