@@ -25,7 +25,7 @@ document.getElementById("viewStatsBtn").addEventListener("click", () => {
     document.getElementById("statIntellect").textContent = `Intellect: ${player.intellect}`;
     document.getElementById("statCoding").textContent = `Coding: ${player.coding}`;
     document.getElementById("statSocial").textContent = `Social: ${player.social}`;
-    document.getElementById("statGpa").textContent = `GPA: ${player.gpa}`;
+    document.getElementById("statGpa").textContent = `GPA: ${player.gpa.toFixed(2)}`;
     document.getElementById("statRelationship").textContent = `Relationship Status: ${player.relationshipStatus}`;
 
     statsDialog.style.display = "flex";
