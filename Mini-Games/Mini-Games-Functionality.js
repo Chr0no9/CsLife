@@ -27,6 +27,8 @@ const codingGame = document.getElementById("codingGame");
 
 const socialGame = document.getElementById("socialGame");
 
+const nextMiniGameBtn = document.getElementById("nextMiniGameBtn");
+
 /*
  * ################################ Mini-Game Effects to the stats ##############################
  */
@@ -112,6 +114,7 @@ function renderMultipleChoiceGame(game, questionId, choicesId, onSelect) {
 // Starts the queued category or opens Events after all mini-games are complete.
 function startCurrentMiniGame() {
     hideAllScreens();
+    nextMiniGameBtn.style.display = "none";
 
     if (totalGames === 0) {
         window.location.href = "../Events/Events.html";
@@ -126,13 +129,6 @@ function startCurrentMiniGame() {
     updateProgress();
 
     const currentGameType = miniGameQueue[currentGameIndex];
-
-    console.log(
-        "Starting game:",
-        currentGameType,
-        currentGameIndex + 1,
-        "of",
-        totalGames);
 
     if (currentGameType === "coding") {
         startCodingGame();
@@ -151,19 +147,6 @@ function startCurrentMiniGame() {
 // Selects and displays a random Study mini-game.
 function startStudyGame() {
     categoryDisplay.textContent = "Study Mini-Game";
-    if (studyMiniGames.length === 0) {
-        document.getElementById("studyTitle").textContent = "Study Mini-Game";
-
-        document.getElementById("studyQuestion").textContent = "No study questions yet";
-        document.getElementById("studyChoices").innerHTML = "";
-
-        document.getElementById("studyMessage").textContent = "";
-        document.getElementById("nextStudyBtn").style.display = "inline-block";
-
-        studyGame.style.display = "block";
-
-        return;
-    }
 
     // Randomizing the study mini-games
     const randomStudyIndex = Math.floor(Math.random() * studyMiniGames.length);
@@ -171,7 +154,6 @@ function startStudyGame() {
 
     document.getElementById("studyTitle").textContent = currentStudyGame.title;
     document.getElementById("studyMessage").textContent = "";
-    document.getElementById("nextStudyBtn").style.display = "none";
 
     renderMultipleChoiceGame(
         currentStudyGame,
@@ -210,7 +192,7 @@ function checkStudyAnswer(selectedButton, selectedAnswer) {
     }
 
     applyEffects(result.effects);
-    document.getElementById("nextStudyBtn").style.display = "inline-block"
+    nextMiniGameBtn.style.display = "inline-block";
 }
 
 /*
@@ -220,27 +202,12 @@ function checkStudyAnswer(selectedButton, selectedAnswer) {
 function startCodingGame() {
     categoryDisplay.textContent = "Coding Mini-Game";
 
-    if (codingMiniGames.length === 0) {
-        document.getElementById("codingTitle").textContent = "Coding Mini-Game";
-
-        document.getElementById("codingQuestion").textContent = "No coding questions yet";
-        document.getElementById("codingChoices").innerHTML = "";
-
-        document.getElementById("codingMessage").textContent = ""
-        document.getElementById("nextCodingBtn").style.display = "inline-block";
-
-        codingGame.style.display = "block";
-
-        return;
-    }
-
     // Randomizing the coding mini-games
     const randomCodingIndex = Math.floor(Math.random() * codingMiniGames.length);
     currentCodingGame = codingMiniGames[randomCodingIndex];
 
     document.getElementById("codingTitle").textContent = currentCodingGame.title;
     document.getElementById("codingMessage").textContent = "";
-    document.getElementById("nextCodingBtn").style.display = "none";
 
     renderMultipleChoiceGame(
         currentCodingGame,
@@ -279,7 +246,7 @@ function checkCodingAnswer(selectedButton, selectedAnswer) {
     }
 
     applyEffects(result.effects);
-    document.getElementById("nextCodingBtn").style.display = "inline-block"
+    nextMiniGameBtn.style.display = "inline-block";
 }
 
 /*
@@ -290,49 +257,20 @@ function checkCodingAnswer(selectedButton, selectedAnswer) {
 function startSocialGame() {
     categoryDisplay.textContent = "Social Mini-Game";
 
-    if (socialMiniGames.length === 0) {
-        document.getElementById("socialTitle").textContent = "Social Mini-Game";
-
-        document.getElementById("socialQuestion").textContent = "No social questions yet";
-        document.getElementById("socialChoices").innerHTML = "";
-
-        document.getElementById("socialMessage").textContent = ""
-        document.getElementById("nextSocialBtn").style.display = "inline-block";
-
-        socialGame.style.display = "block";
-
-        return;
-    }
-
     // Randomizing the social mini-games
     const randomSocialIndex = Math.floor(Math.random() * socialMiniGames.length);
     currentSocialGame = socialMiniGames[randomSocialIndex];
 
     document.getElementById("socialTitle").textContent = currentSocialGame.title;
-    document.getElementById("socialQuestion").textContent = currentSocialGame.prompt;
     document.getElementById("socialMessage").textContent = "";
-    document.getElementById("nextSocialBtn").style.display = "none";
 
-    const choicesContainer = document.getElementById("socialChoices");
-    choicesContainer.innerHTML = "";
-
-    for (let i = 0; i < currentSocialGame.choices.length; i++) {
-        const choice = currentSocialGame.choices[i];
-        const choiceButton = document.createElement("button");
-        choiceButton.type = "button";
-        choiceButton.textContent = choice;
-
-        choiceButton.classList.add("choice-button");
-
-        // Sends the clicked Social choice and its index to the choice handler.
-        function SocialChoices() {
-            checkSocialChoice(choiceButton, i);
-        }
-
-        choiceButton.addEventListener("click", SocialChoices);
-
-        choicesContainer.appendChild(choiceButton);
-    }
+    renderMultipleChoiceGame(
+        currentSocialGame,
+        "socialQuestion",
+        "socialChoices",
+        (selectedButton, choice, choiceIndex) => {
+            checkSocialChoice(selectedButton, choiceIndex);
+        });
 
     socialGame.style.display = "block";
 }
@@ -355,7 +293,7 @@ function checkSocialChoice(selectedButton, choiceIndex) {
     socialMessage.textContent = "Choice selected!";
     applyEffects(effects);
 
-    document.getElementById("nextSocialBtn").style.display = "inline-block";
+    nextMiniGameBtn.style.display = "inline-block";
 }
 
 /*
@@ -374,26 +312,10 @@ function finishAllMiniGames() {
     window.location.href = "../Events/Events.html";
 }
 
-// Advances after the player finishes a Study mini-game.
-document
-    .getElementById("nextStudyBtn")
-    .addEventListener(
-        "click",
-        completeCurrentMiniGame);
-
-// Advances after the player finishes a Coding mini-game.
-document
-    .getElementById("nextCodingBtn")
-    .addEventListener(
-        "click",
-        completeCurrentMiniGame);
-
-// Advances after the player finishes a Social mini-game.
-document
-    .getElementById("nextSocialBtn")
-    .addEventListener(
-        "click",
-        completeCurrentMiniGame);
+// Advances after the player finishes any mini-game category.
+nextMiniGameBtn.addEventListener(
+    "click",
+    completeCurrentMiniGame);
 
 // Starts the first queued mini-game when the page script loads.
 startCurrentMiniGame();

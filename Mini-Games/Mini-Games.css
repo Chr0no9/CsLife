@@ -202,9 +202,7 @@ button:hover {
 
 /* Navigation Buttons */
 
-#nextStudyBtn,
-#nextCodingBtn,
-#nextSocialBtn {
+#nextMiniGameBtn {
     align-self: center;
     margin-top: 10px;
     min-width: 200px;
@@ -251,9 +249,7 @@ button:hover {
         grid-template-columns: 1fr;
     }
 
-    #nextStudyBtn,
-    #nextCodingBtn,
-    #nextSocialBtn {
+    #nextMiniGameBtn {
         width: 100%;
         min-width: 0;
     }
