@@ -255,3 +255,49 @@ button:hover {
     font-size: 17px;
     margin-bottom: 20px;
 }
+
+/* Responsive Layout */
+
+@media (max-width: 600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .main-game-container {
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #playerAvatar {
+        position: static;
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        transform: none;
+    }
+
+    .dialog {
+        padding: 16px;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .dialog-box,
+    #allocationModal .dialog-box {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .allocation-row {
+        grid-template-columns: minmax(80px, 1fr) 44px 32px 44px;
+        gap: 6px;
+    }
+}

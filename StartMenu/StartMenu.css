@@ -56,3 +56,33 @@ h1 {
     min-height: 24px;
     text-align: center;
 }
+
+/* Responsive Layout */
+
+@media (max-width: 600px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .menu-container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 64px;
+        margin-bottom: 40px;
+    }
+
+    .newGameBtn,
+    .continueBtn {
+        width: 100%;
+        max-width: 340px;
+        padding: 20px;
+        margin: 20px auto;
+        box-sizing: border-box;
+        font-size: 24px;
+    }
+}

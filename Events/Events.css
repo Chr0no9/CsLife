@@ -60,3 +60,35 @@ body {
     background: #E29578;
     color: white;
 }
+
+/* Responsive Layout */
+
+@media (max-width: 600px) {
+    body {
+        min-height: 100vh;
+        height: auto;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .eventContainer {
+        width: 100%;
+        min-height: auto;
+        padding: 24px;
+        box-sizing: border-box;
+    }
+
+    #eventTitle {
+        font-size: 34px;
+    }
+
+    #eventDescription {
+        font-size: 20px;
+    }
+
+    .choiceButton,
+    #continueBtn {
+        width: 100%;
+        font-size: 18px;
+    }
+}
