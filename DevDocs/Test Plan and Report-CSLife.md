@@ -7,7 +7,7 @@
 Adrian Lopez, Ethan Zarella,   
 Saniha Sreedhara 
 
-### Release 1.0, Release Date: 7/9/2026, 
+### Release 1.0, Release Date: 7/21/2026, 
 
 ### 
 
