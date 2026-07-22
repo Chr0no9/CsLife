@@ -122,3 +122,31 @@ select {
     background-color: #E29578;
     color: white;
 }
+
+/* Responsive Layout */
+
+@media (max-width: 600px) {
+    body {
+        min-height: 100vh;
+        height: auto;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .character-container {
+        width: 100%;
+        min-height: auto;
+        margin-top: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .avatar-selection {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+}

@@ -124,9 +124,14 @@ h1 {
 /* Responsive Layout */
 
 @media (max-width: 600px) {
+    body {
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
     .end-game-container {
-        width: 92%;
-        padding: 25px;
+        width: 100%;
+        padding: 24px;
     }
 
     h1 {
@@ -140,4 +145,5 @@ h1 {
     .final-stats {
         width: 100%;
     }
+
 }

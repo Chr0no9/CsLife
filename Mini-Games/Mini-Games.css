@@ -210,3 +210,51 @@ button:hover {
     min-width: 200px;
     padding: 10px 18px;
 }
+
+/* Responsive Layout */
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+        box-sizing: border-box;
+        align-items: flex-start;
+    }
+
+    .mini-game-container {
+        width: 100%;
+        height: auto;
+        min-height: calc(100vh - 24px);
+        padding: 16px;
+    }
+
+    .mini-game-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #miniGameCategory {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    #gameProgress {
+        align-self: center;
+        font-size: 16px;
+    }
+
+    .question-box {
+        padding: 14px;
+        font-size: 18px;
+    }
+
+    .answer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #nextStudyBtn,
+    #nextCodingBtn,
+    #nextSocialBtn {
+        width: 100%;
+        min-width: 0;
+    }
+}
