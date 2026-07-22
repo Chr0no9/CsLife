@@ -48,6 +48,7 @@ const gameState = {
     quarter : "Fall",
     currentScreen : "QuarterStart",
     currentEvent : null,
+    seenEvents : [],
     currentMiniGame : null,
     miniGameDone : false,
     eventDone : false,

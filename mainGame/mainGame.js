@@ -1,3 +1,4 @@
+
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 
 const player = JSON.parse(localStorage.getItem("player"));
@@ -24,7 +25,7 @@ document.getElementById("viewStatsBtn").addEventListener("click", () => {
     document.getElementById("statIntellect").textContent = `Intellect: ${player.intellect}`;
     document.getElementById("statCoding").textContent = `Coding: ${player.coding}`;
     document.getElementById("statSocial").textContent = `Social: ${player.social}`;
-    document.getElementById("statGpa").textContent = `GPA: ${player.gpa}`;
+    document.getElementById("statGpa").textContent = `GPA: ${player.gpa.toFixed(2)}`;
     document.getElementById("statRelationship").textContent = `Relationship Status: ${player.relationshipStatus}`;
 
     statsDialog.style.display = "flex";
@@ -36,11 +37,11 @@ document.getElementById("closeStatsBtn").addEventListener("click", () => {
 });
 
 const quarterPlan = {
-    study : 0,
-    coding : 0,
-    social : 0,
-    work : 0,
-    rest : 0
+    study: 0,
+    coding: 0,
+    social: 0,
+    work: 0,
+    rest: 0
 };
 let pointsLeft = 3;
 let miniGameQueue = [];
@@ -209,7 +210,6 @@ function constructMiniGameQueue() {
     }
 }
 
-// Opens Events when no games are queued or opens the Mini-Games page otherwise.
 document
     .getElementById("continueBtn")
     .addEventListener("click", () => {

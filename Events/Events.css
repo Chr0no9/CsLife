@@ -12,6 +12,7 @@ body {
     width: 70vw;
     min-height: 55vh;
     padding: 40px;
+    box-sizing: border-box;
     background: #EDF6F9;
     border: 4px solid #83C5BE;
     border-radius: 20px;
