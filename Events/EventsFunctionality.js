@@ -1,23 +1,17 @@
-// Imports the functions used to select an event and apply its stat changes.
 import {
     getEventForQuarter,
     applyEventEffects
 } from "../Events.js";
 
-// Imports the function that advances the game to the next quarter.
 import { NextQuarter } from "../Quarter.js";
 
-// Imports the function that saves the complete game data.
 import { saveGame } from "../DataStorage.js";
 
-// Loads the saved player and game-state objects from local storage.
 const player = JSON.parse(localStorage.getItem("player"));
 const gameState = JSON.parse(localStorage.getItem("gameState"));
 
-// Selects the event that should appear during the current quarter.
 const event = getEventForQuarter(gameState);
 
-// Gets the HTML elements used to display choices, effects, and the Continue button.
 const choices = document.getElementById("choiceContainer");
 const continueBtn = document.getElementById("continueBtn");
 const continueEffects = document.getElementById("continueEffects");
